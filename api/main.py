@@ -10,35 +10,48 @@ import logging
 
 app = FastAPI()
 
+# DATABASE_URL = "postgresql://admin:admin@localhost:0224/Blackfriday"
+# engine = create_engine(DATABASE_URL)
+# Session = sessionmaker(bind=engine)
+
 DATABASE_URL = "postgresql://admin:admin@localhost:0224/Blackfriday"
 engine = create_engine(DATABASE_URL)
-Session = sessionmaker(bind=engine)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 logging.basicConfig(level=logging.ERROR)
 
 
 class Features(BaseModel):
-    Occupation: str
-    Marital_Status: str
-    Product_Category_1: str
-    Product_Category_2: str
-    Product_Category_3: str
+    User_ID: str
+    Product_ID: str
+    Occupation: int
+    Marital_Status: int
+    Product_Category_1: int
+    Product_Category_2: int
+    Product_Category_3: int
     Age: str
     Gender: str
     City_Category: str
-    Stay_In_Current_City_Years: int
+    Stay_In_Current_City_Years: str
 
 
 @app.get("/")
 async def read_root():
     return {"message": "Hello, World"}
 
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 @app.post("/predict_single")
 def predict_single(features: Features, source: str = "webapp"):
     try:
         features_dict = features.dict()
-        df = pd.DataFrame.from_dict(features_dict)
+        #df = pd.DataFrame.from_dict([features_dict])
+        df = pd.DataFrame([features_dict])
         res = predict(df)
         df_res = pd.DataFrame(res, columns=["Purchase"])
         df_res = df.join(df_res)

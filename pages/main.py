@@ -150,28 +150,43 @@ if page == "Get Prediction":
             )
 
     inputs = {
+        "User_ID": "Notneeded",
+        "Product_ID": "Notneeded",
         "Gender": gender,
         "Age": age,
-        "Occupation": occupation,
+        "Occupation": occupation_options.index(occupation),
         "City_Category": city_category,
         "Stay_In_Current_City_Years": stay_years,
-        "Marital_Status": marital_status,
-        "Product_Category_1": product_category_1,
-        "Product_Category_2": product_category_2,
-        "Product_Category_3": product_category_3,
+        "Marital_Status": 0 if marital_status == "Single" else 1,
+        "Product_Category_1": cloth_categories.index(product_category_1) + 1,
+        "Product_Category_2": None if product_category_2 == "None" else electronic_options.index(product_category_2),
+        "Product_Category_3": None if product_category_3 == "None" else home_good_options.index(product_category_3) + 1
+        # "Product_Category_2": product_category_2 if product_category_2 != "None" else "",
+        # "Product_Category_3": product_category_3 if product_category_3 != "None" else "",
     }
+    if inputs["Product_Category_2"] is not None:
+        inputs["Product_Category_2"] += 1
+    if inputs["Product_Category_3"] is not None:
+       inputs["Product_Category_3"] += 2
 
-    input_vals = list(inputs.values())
-    inputs = []
-    inputs.append(input_vals)
+
+    # input_vals = list(inputs.values())
+    # inputs = []
+    # inputs.append(input_vals)
     if st.button("Predict the Features"):
         res = requests.post(
-            url="http://127.0.0.1:8000/predict_single", data=json.dumps(inputs)
+            url="http://127.0.0.1:8000/predict_single", 
+            #data=json.dumps(inputs)
+            json=inputs
         )
         if res.status_code == 200:
             result = res.json()
+            st.success("Prediction successful.")
+            st.write(result)
         else:
-            st.error("Failed to get prediction. Please try again later.")
+            st.error(f"Failed to get prediction. Please try again later. Error: {res.status_code}")
+            error_details = res.json()
+            st.write("Error Details:", error_details)  
 
     file = st.file_uploader("Insert CSV FILES")
 
