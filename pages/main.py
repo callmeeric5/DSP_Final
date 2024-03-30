@@ -1,6 +1,6 @@
 import streamlit as st
 import requests
-import ast
+
 import datetime
 import json
 import pandas as pd
@@ -9,7 +9,6 @@ st.set_page_config(page_title="Black Friday", page_icon="🛍️", layout="wide"
 page = st.sidebar.selectbox("Choose a page", ["Get Prediction", "Get Past Prediction"])
 
 if page == "Get Prediction":
-
     with st.container():
         st.title("Black Friday Prediction")
         st.header("DSP - EPITA")
@@ -165,36 +164,37 @@ if page == "Get Prediction":
     input_vals = list(inputs.values())
     inputs = []
     inputs.append(input_vals)
-
     if st.button("Predict the Features"):
-        res = requests.post(url="API HERE", data=json.dumps(inputs))
-        json_string = res.text
-        response_dict = json.loads(json_string)
-        body = response_dict["Predictions"]["body"]
-        body = ast.literal_eval(body)
-        st.subheader(f"Predicted Quality 🚀 =  {(body[-3])}")
+        res = requests.post(
+            url="http://127.0.0.1:8000/predict_single", data=json.dumps(inputs)
+        )
+        if res.status_code == 200:
+            result = res.json()
+        else:
+            st.error("Failed to get prediction. Please try again later.")
 
     file = st.file_uploader("Insert CSV FILES")
 
     if st.button("Make prediction"):
-        csv_file = pd.read_csv(file)
-        base_filename = datetime.datetime.now().strftime("%Y%m%d")
-        csv_file.to_csv(f"airflow/data/Clean_Data/{base_filename}.csv", index=False)
-        csv_file = csv_file.drop(["quality", "Id"], axis=1)
-        features_list = csv_file.values.tolist()
-
-        response = requests.post(url="API HERE", data=json.dumps(features_list))
-
-        if response.status_code == 200:
-            json_string = response.text
-            response_dict = json.loads(json_string)
-            body = response_dict["Predictions"]["body"]
-            body_ = ast.literal_eval(body)
-            data = json.loads(body_)
-            df = pd.DataFrame(data)
-            st.table(df)
+        if file is None:
+            st.error("Please upload a CSV file.")
         else:
-            st.subheader(f"Error from API 😞 = {response.json()}")
+            csv_file = pd.read_csv(file)
+            base_filename = datetime.datetime.now().strftime("%Y%m%d")
+            csv_file.to_csv(f"airflow/data/Clean_Data/{base_filename}.csv", index=False)
+            csv_file = csv_file.drop(["quality", "Id"], axis=1)
+            features_list = csv_file.values.tolist()
+
+            response = requests.post(
+                url="http://127.0.0.1:8000/predict-batch",
+                data=json.dumps(features_list),
+            )
+            if response.status_code == 200:
+                predictions_df = pd.read_json(response.json()["data"], orient="records")
+                st.dataframe(predictions_df)
+            else:
+                st.error("Failed to make prediction. Please try again later.")
+
 elif page == "Get Past Prediction":
     with st.container():
         st.title("Black Friday Prediction History")
@@ -208,39 +208,20 @@ elif page == "Get Past Prediction":
         with right_column:
             e_Date = st.date_input("End Date")
 
+        filter_option = st.selectbox(
+            "Prediction source", ["webapp", "scheduled", "all"]
+        )
+
     if st.button("Get Past Predictions"):
-        response = requests.get(url="API HERE")
-
-        json_string = response.text
-        response_dict = json.loads(json_string)
-
-        body = response_dict["prediction_list"]
-        body = ast.literal_eval(body)
-
-        date_list = []
-        for item in body:
-            created_at = item["created_at"]
-            created_datetime = datetime.datetime.fromtimestamp(
-                created_at / 1000
-            )  # Assuming the timestamp is in milliseconds
-            created_date = created_datetime.date()
-            date_list.append(created_date)
-
-        df = pd.DataFrame(body)
-        df["created_date_"] = list(date_list)
-        filtered_dates = [date for date in date_list if s_Date <= date <= e_Date]
-
-        selected_columns = [
-            "Gender",
-            "Age",
-            "City_Category",
-            "Stay_In_Current_City_Years",
-            "created_date_",
-        ]
-        df_subset = df.loc[:, selected_columns]
-        filtered_df = df_subset[df_subset["created_date_"].isin(filtered_dates)]
+        response = requests.get(
+            url="http://127.0.0.1:8000/past-predictions",
+            params={"filter": filter_option},
+        )
 
         if response.status_code == 200:
-            st.table(filtered_df)
+            past_predictions_df = pd.read_json(
+                response.json()["data"], orient="records"
+            )
+            st.dataframe(past_predictions_df)
         else:
-            st.subheader(f"Error from API 😞 = {response.json()}")
+            st.error("Failed to get past predictions. Please try again later.")

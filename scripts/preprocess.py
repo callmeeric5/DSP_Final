@@ -1,11 +1,7 @@
 from sklearn.preprocessing import OrdinalEncoder
 import joblib
 import pandas as pd
-from scripts.config import (
-    CATEGORICAL_FEATURES,
-    NUMERICAL_FEATURES,
-    ENCODER_PATH
-)
+from scripts.config import CATEGORICAL_FEATURES, NUMERICAL_FEATURES, ENCODER_PATH
 
 
 def preprocess(
@@ -13,7 +9,6 @@ def preprocess(
     categorical_columns: list = CATEGORICAL_FEATURES,
     encoder_path: str = ENCODER_PATH,
 ) -> pd.DataFrame:
-
     df = fill_features_nulls(df)
 
     df = encode_categorical(df, categorical_columns, encoder_path)
@@ -28,6 +23,7 @@ def make_encoder(
     encoder.fit(df[categorical_columns])
     joblib.dump(encoder, path)
 
+
 def encode_categorical(
     df: pd.DataFrame, categorical_columns: list, path: str = ENCODER_PATH
 ) -> pd.DataFrame:
@@ -36,6 +32,7 @@ def encode_categorical(
     df[categorical_columns] = pd.DataFrame(encoded_columns, columns=categorical_columns)
     df.reset_index()
     return df
+
 
 def fill_features_nulls(
     df: pd.DataFrame,
