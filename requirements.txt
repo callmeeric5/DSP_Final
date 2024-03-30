@@ -9,3 +9,4 @@ streamlit==1.32.0
 xgboost==1.7.3
 psycopg2
 python-multipart
+xgbboost

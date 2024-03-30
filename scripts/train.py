@@ -1,15 +1,13 @@
 import pandas as pd
 import joblib
 from xgboost import XGBRegressor
-from scripts.config import MODEL_PATH, CATEGORICAL_FEATURES
+from config import MODEL_PATH, CATEGORICAL_FEATURES
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
-from scripts.preprocess import preprocess, make_encoder
+from preprocess import preprocess, make_encoder
 
 
-def split_data(
-    df: pd.DataFrame,
-) -> (pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame):
+def split_data(df: pd.DataFrame):
     X = df.drop(columns=["User_ID", "Product_ID", "Purchase"])
     y = df["Purchase"]
     X_train, X_test, y_train, y_test = train_test_split(

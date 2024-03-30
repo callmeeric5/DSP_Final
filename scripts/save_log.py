@@ -1,4 +1,4 @@
-from scripts.logger import Logger
+from logger import Logger
 
 
 def save_data_logs(session, error_dict):

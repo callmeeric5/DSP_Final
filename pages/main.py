@@ -148,14 +148,19 @@ if page == "Get Prediction":
             product_category_3 = st.selectbox(
                 "Home Good Options", home_good_options, index=0
             )
-
+    city_category_mapping = {
+        "Paris": "A",
+        "Levalois Perret": "B",
+        "Clichy": "C",
+    }
+    city_category_letter = city_category_mapping.get(city_category, "Unknown")
     inputs = {
         "User_ID": "Notneeded",
         "Product_ID": "Notneeded",
         "Gender": gender,
         "Age": age,
         "Occupation": occupation_options.index(occupation),
-        "City_Category": city_category,
+        "City_Category": city_category_letter,
         "Stay_In_Current_City_Years": stay_years,
         "Marital_Status": 0 if marital_status == "Single" else 1,
         "Product_Category_1": cloth_categories.index(product_category_1) + 1,

@@ -1,5 +1,8 @@
 from fastapi import FastAPI, UploadFile, HTTPException
 from pydantic import BaseModel
+from fastapi import Depends
+from typing import List
+from sqlalchemy.orm import Session
 import pandas as pd
 from scripts.save_to_db import create_prediction_table
 from scripts.inference import predict
@@ -51,7 +54,12 @@ def predict_single(features: Features, source: str = "webapp"):
     try:
         features_dict = features.dict()
         #df = pd.DataFrame.from_dict([features_dict])
-        df = pd.DataFrame([features_dict])
+        correct_order_columns = ['User_ID', 'Product_ID',
+            'Gender', 'Age', 'Occupation', 'City_Category', 
+            'Stay_In_Current_City_Years', 'Marital_Status', 
+            'Product_Category_1', 'Product_Category_2', 'Product_Category_3'
+        ]
+        df = pd.DataFrame([features_dict], columns=correct_order_columns)
         res = predict(df)
         df_res = pd.DataFrame(res, columns=["Purchase"])
         df_res = df.join(df_res)
@@ -84,12 +92,10 @@ def predict_batch(csv_file: UploadFile):
         raise HTTPException(status_code=500, detail="Internal Server Error")
 
 
-@app.get("/past-predictions")
-def get_predictions(filter_option: str):
+def get_predictions(filter_option: str, db: Session = Depends(get_db)):
     try:
-        with Session() as session:
-            predictions_data = get_past_predictions(session, filter_option)
-            return {"status": 200, "message": "Successful", "results": predictions_data}
+        predictions_data = get_past_predictions(filter_option)
+        return predictions_data
     except Exception as e:
         logging.error(f"An error occurred in get_predictions: {e}")
-        raise HTTPException(status_code=500, detail="Internal Server Error")
+        raise HTTPException(status_code=500, detail=str(e))
