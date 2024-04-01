@@ -7,13 +7,13 @@ import pandas as pd
 import sys
 import os
 from scripts.save_to_db import create_prediction_table
+
 # Get the current directory of the script
 current_dir = os.path.dirname(os.path.realpath(__file__))
 # Construct the path to the parent directory of the 'scripts' package
 parent_dir = os.path.abspath(os.path.join(current_dir, ".."))
 # Add the parent directory to the Python path
 sys.path.insert(0, parent_dir)
-
 
 st.set_page_config(page_title="Black Friday", page_icon="🛍️", layout="wide")
 page = st.sidebar.selectbox("Choose a page", ["Get Prediction", "Get Past Prediction"])
@@ -30,13 +30,13 @@ if page == "Get Prediction":
             st.header("Description")
             st.write("##")
             st.write(
-                """Hello World?Hello WorldHello WorldHello WorldHello WorldHello 
-                WorldHello WorldHello WorldHello WorldHello WorldHello WorldHello 
-                WorldHello WorldHello WorldHello WorldHello WorldHello WorldHello 
-                WorldHello WorldHello WorldHello WorldHello WorldHello 
-                WorldHello WorldHello WorldHello WorldHello WorldHello 
-                WorldHello WorldHello WorldHello WorldHello WorldHello WorldHello 
-                WorldHello WorldHello World"""
+                """To use the black friday sales dataset for purchase predictions, follow these steps: 
+                Access the dataset, which includes information about users and products sold on black friday. 
+                Navigate to the prediction page where you'll find a form for making single predictions. 
+                Fill out the form with the relevant user and product information to predict a single purchase. 
+                Additionally, utilize the CSV uploader feature on the same page to make multiple predictions at once. 
+                If you're interested in reviewing past prediction results, you can access the prediction history on 
+                the second page."""
             )
             st.write(
                 "[Learn More >](https://www.kaggle.com/datasets/sdolezel/black-friday/code)"
@@ -199,7 +199,7 @@ if page == "Get Prediction":
                 ],
             )
             st.dataframe(prediction_df)
-            create_prediction_table(prediction_df)
+            # create_prediction_table(prediction_df)
         else:
             st.error(
                 f"Failed to get prediction. Please try again later. Error: {res.status_code}"
@@ -219,10 +219,24 @@ if page == "Get Prediction":
                 )
 
                 if response.status_code == 200:
-                    predictions_df = pd.DataFrame(response.json()["results"])
-                    prediction_column = predictions_df.iloc[:, -1]
-                    prediction_column = prediction_column.rename("Predicted Purchase")
-                    st.dataframe(prediction_column)
+                    result = response.json()
+                    st.success("Prediction successful.")
+                    prediction_df = pd.DataFrame(
+                        result["results"],
+                        columns=[
+                            "Gender",
+                            "Age",
+                            "Occupation",
+                            "City_Category",
+                            "Stay_In_Current_City_Years",
+                            "Marital_Status",
+                            "Product_Category_1",
+                            "Product_Category_2",
+                            "Product_Category_3",
+                            "Purchase",
+                        ],
+                    )
+                    st.dataframe(prediction_df)
 
                 else:
                     st.error("Failed to get batch predictions. Please try again later.")
@@ -239,6 +253,7 @@ elif page == "Get Past Prediction":
         left_column, right_column = st.columns(2)
         with left_column:
             s_Date = st.date_input("Start Date")
+
         with right_column:
             e_Date = st.date_input("End Date")
 
@@ -247,15 +262,17 @@ elif page == "Get Past Prediction":
         )
 
     if st.button("Get Past Predictions"):
-        response = requests.get(
-            url="http://127.0.0.1:8000/past-predictions",
-            params={"filter": filter_option},
-        )
+        url = "http://localhost:8000/past-predictions"
+        params = {
+            "filter_option": filter_option,
+            "start_date": str(s_Date),
+            "end_date": str(e_Date),
+        }
 
-        if response.status_code == 200:
-            past_predictions_df = pd.read_json(
-                response.json()["data"], orient="records"
-            )
-            st.dataframe(past_predictions_df)
+        res = requests.get(url, params=params)
+        if res.status_code == 200:
+            data = res.json()  # Access the 'data' key
+            df = pd.DataFrame(data)  # Convert to DataFrame
+            st.dataframe(df)  # Display DataFrame
         else:
             st.error("Failed to get past predictions. Please try again later.")

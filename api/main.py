@@ -10,6 +10,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import logging
 from fastapi.responses import JSONResponse
+from datetime import datetime
+from fastapi import Query
 
 app = FastAPI()
 
@@ -79,7 +81,7 @@ def predict_single(features: Features, source: str = "webapp"):
                 "status": 200,
                 "message": "Successful",
                 "results": df_with_pred.values.tolist(),
-                "db_res": db_res
+                "db_res": db_res,
             },
         )
     except Exception as e:
@@ -94,21 +96,24 @@ def predict_batch(csv_file: UploadFile, source: str = "webapp"):
         res = predict(df)
         df_res = pd.DataFrame(res, columns=["Purchase"])
         df_res = df.join(df_res)
-        create_prediction_table(df_res, source=source)
+        db_res = create_prediction_table(df_res, source=source)
         return {
             "status": 200,
             "message": "Successful-1111",
             "results": df_res.values.tolist(),
+            "db_res": db_res,
         }
     except Exception as e:
         logging.error(f"An error occurred in predict_batch: {e}")
         raise HTTPException(status_code=500, detail="Internal Server Error")
 
 
-def get_predictions(filter_option: str):
+@app.get("/past-predictions")
+def get_predictions(filter_option: str, start_date: str, end_date: str):
     try:
-        predictions_data = get_past_predictions(filter_option)
+        # parsed_start_date = datetime.strptime(start_date, '%Y-%m-%d') if start_date else None
+        # parsed_end_date = datetime.strptime(end_date, '%Y-%m-%d') if end_date else None
+        predictions_data = get_past_predictions(filter_option, start_date, end_date)
         return predictions_data
     except Exception as e:
-        logging.error(f"An error occurred in get_predictions: {e}")
         raise HTTPException(status_code=500, detail=str(e))

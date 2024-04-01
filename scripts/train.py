@@ -1,7 +1,7 @@
 import pandas as pd
 import joblib
 from xgboost import XGBRegressor
-from config import MODEL_PATH, CATEGORICAL_FEATURES
+from scripts.__init__ import MODEL_PATH, CATEGORICAL_FEATURES
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
 from preprocess import preprocess, make_encoder

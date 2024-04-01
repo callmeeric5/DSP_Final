@@ -11,9 +11,10 @@ def db_engine():
         engine = create_engine(f"postgresql://{DB_USER}:@{DB_HOST}:{DB_PORT}/{DB_NAME}")
         Base.metadata.create_all(engine)
         Session = sessionmaker(bind=engine)
+        session = Session()
         print("Database connection established")
 
-        return {"engine": engine, "Session": Session, "status": 200}
+        return {"engine": engine, "Session": session, "status": 200}
     except Exception as e:
         print(e.args)
         return {"status": 500}

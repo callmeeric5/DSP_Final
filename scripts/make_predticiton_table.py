@@ -1,14 +1,7 @@
 import datetime
 from sqlalchemy import Column, Integer, Float, String, DateTime
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy import create_engine
-from scripts.__init__ import DB_HOST, DB_NAME, DB_USER, DB_PORT
 from sqlalchemy.ext.declarative import declarative_base
 
-# engine = create_engine(f"postgresql://{DB_USER}@{DB_HOST}:{DB_PORT}/{DB_NAME}")
-#
-# # Define Session
-# Session = sessionmaker(bind=engine)
 Base = declarative_base()
 
 
@@ -27,5 +20,3 @@ class Prediction_Table(Base):
     purchase = Column(Float)
     source = Column(String)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
-
-
