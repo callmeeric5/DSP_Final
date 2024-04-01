@@ -1,17 +1,17 @@
 from pathlib import Path
 
 DB_HOST = "localhost"
-DB_NAME = "Blackfriday"
-DB_USER = "admin"
-DB_PASSWORD = "admin"
-DB_PORT = "0224"
+DB_NAME = "blackfriday"
+DB_USER = "ericwindsor"
 
-#models\encoder.joblib
+DB_PORT = "5432"
+
+# models\encoder.joblib
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Define MODEL_PATH and ENCODER_PATH relative to BASE_DIR
-MODEL_PATH = BASE_DIR / 'models' / 'model.joblib'
-ENCODER_PATH = BASE_DIR / 'models' / 'encoder.joblib'
+MODEL_PATH = BASE_DIR / "models" / "model.joblib"
+ENCODER_PATH = BASE_DIR / "models" / "encoder.joblib"
 
 # MODEL_PATH = r'..\models\model.joblib'
 # ENCODER_PATH = '..\models\encoder.joblib'

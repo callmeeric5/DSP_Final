@@ -1,7 +1,7 @@
 from sklearn.preprocessing import OrdinalEncoder
 import joblib
 import pandas as pd
-from scripts.config import CATEGORICAL_FEATURES, NUMERICAL_FEATURES, ENCODER_PATH
+from scripts.__init__ import CATEGORICAL_FEATURES, NUMERICAL_FEATURES, ENCODER_PATH
 
 
 def preprocess(

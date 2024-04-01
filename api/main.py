@@ -1,7 +1,6 @@
 from fastapi import FastAPI, UploadFile, HTTPException
 from pydantic import BaseModel
 from fastapi import Depends
-from typing import List
 from sqlalchemy.orm import Session
 import pandas as pd
 from scripts.save_to_db import create_prediction_table
@@ -10,6 +9,7 @@ from scripts.get_past_prediction import get_past_predictions
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import logging
+from fastapi.responses import JSONResponse
 
 app = FastAPI()
 
@@ -42,46 +42,59 @@ class Features(BaseModel):
 async def read_root():
     return {"message": "Hello, World"}
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 @app.post("/predict_single")
 def predict_single(features: Features, source: str = "webapp"):
     try:
-        features_dict = features.dict()
-        #df = pd.DataFrame.from_dict([features_dict])
-        correct_order_columns = ['User_ID', 'Product_ID',
-            'Gender', 'Age', 'Occupation', 'City_Category', 
-            'Stay_In_Current_City_Years', 'Marital_Status', 
-            'Product_Category_1', 'Product_Category_2', 'Product_Category_3'
+        features_dict = features.model_dump()
+        correct_order_columns = [
+            "User_ID",
+            "Product_ID",
+            "Gender",
+            "Age",
+            "Occupation",
+            "City_Category",
+            "Stay_In_Current_City_Years",
+            "Marital_Status",
+            "Product_Category_1",
+            "Product_Category_2",
+            "Product_Category_3",
         ]
-        df = pd.DataFrame([features_dict], columns=correct_order_columns)
+
+        features_list = [features_dict[col] for col in correct_order_columns]
+
+        df = pd.DataFrame([features_list], columns=correct_order_columns)
+
         res = predict(df)
+
         df_res = pd.DataFrame(res, columns=["Purchase"])
-        df_res = df.join(df_res)
-        create_prediction_table(df_res, source=source)
-        return {
-            "status": 200,
-            "message": "Successful",
-            "results": df_res.values.tolist(),
-        }
+
+        df_with_pred = pd.concat([df, df_res], axis=1)
+
+        db_res = create_prediction_table(df_with_pred, source=source)
+
+        return JSONResponse(
+            status_code=200,
+            content={
+                "status": 200,
+                "message": "Successful",
+                "results": df_with_pred.values.tolist(),
+                "db_res": db_res
+            },
+        )
     except Exception as e:
         logging.error(f"An error occurred in predict_single: {e}")
         raise HTTPException(status_code=500, detail="Internal Server Error")
 
 
 @app.post("/predict-batch")
-def predict_batch(csv_file: UploadFile):
+def predict_batch(csv_file: UploadFile, source: str = "webapp"):
     try:
         df = pd.read_csv(csv_file.file)
         res = predict(df)
         df_res = pd.DataFrame(res, columns=["Purchase"])
         df_res = df.join(df_res)
-        create_prediction_table(df_res)
+        create_prediction_table(df_res, source=source)
         return {
             "status": 200,
             "message": "Successful-1111",
@@ -92,7 +105,7 @@ def predict_batch(csv_file: UploadFile):
         raise HTTPException(status_code=500, detail="Internal Server Error")
 
 
-def get_predictions(filter_option: str, db: Session = Depends(get_db)):
+def get_predictions(filter_option: str):
     try:
         predictions_data = get_past_predictions(filter_option)
         return predictions_data

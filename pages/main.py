@@ -4,6 +4,16 @@ import requests
 import datetime
 import json
 import pandas as pd
+import sys
+import os
+from scripts.save_to_db import create_prediction_table
+# Get the current directory of the script
+current_dir = os.path.dirname(os.path.realpath(__file__))
+# Construct the path to the parent directory of the 'scripts' package
+parent_dir = os.path.abspath(os.path.join(current_dir, ".."))
+# Add the parent directory to the Python path
+sys.path.insert(0, parent_dir)
+
 
 st.set_page_config(page_title="Black Friday", page_icon="🛍️", layout="wide")
 page = st.sidebar.selectbox("Choose a page", ["Get Prediction", "Get Past Prediction"])
@@ -105,7 +115,7 @@ if page == "Get Prediction":
                 "Sandals",
             ]
             product_category_1 = st.selectbox("Cloth Categories", cloth_categories)
-            electronic_options = ["None"] + [
+            electronic_options = [
                 "Smartphone",
                 "Laptop",
                 "Tablet",
@@ -127,7 +137,7 @@ if page == "Get Prediction":
             product_category_2 = st.selectbox(
                 "Electronic Options", electronic_options, index=0
             )
-            home_good_options = ["None"] + [
+            home_good_options = [
                 "Blender",
                 "Microwave",
                 "Toaster",
@@ -164,34 +174,36 @@ if page == "Get Prediction":
         "Stay_In_Current_City_Years": stay_years,
         "Marital_Status": 0 if marital_status == "Single" else 1,
         "Product_Category_1": cloth_categories.index(product_category_1) + 1,
-        "Product_Category_2": None if product_category_2 == "None" else electronic_options.index(product_category_2),
-        "Product_Category_3": None if product_category_3 == "None" else home_good_options.index(product_category_3) + 1
-        # "Product_Category_2": product_category_2 if product_category_2 != "None" else "",
-        # "Product_Category_3": product_category_3 if product_category_3 != "None" else "",
+        "Product_Category_2": electronic_options.index(product_category_2),
+        "Product_Category_3": home_good_options.index(product_category_3) + 1,
     }
-    if inputs["Product_Category_2"] is not None:
-        inputs["Product_Category_2"] += 1
-    if inputs["Product_Category_3"] is not None:
-       inputs["Product_Category_3"] += 2
 
-
-    # input_vals = list(inputs.values())
-    # inputs = []
-    # inputs.append(input_vals)
     if st.button("Predict the Features"):
-        res = requests.post(
-            url="http://127.0.0.1:8000/predict_single", 
-            #data=json.dumps(inputs)
-            json=inputs
-        )
+        res = requests.post(url="http://127.0.0.1:8000/predict_single", json=inputs)
         if res.status_code == 200:
             result = res.json()
             st.success("Prediction successful.")
-            st.write(result)
+            prediction_df = pd.DataFrame(
+                result["results"],
+                columns=[
+                    "Gender",
+                    "Age",
+                    "Occupation",
+                    "City_Category",
+                    "Stay_In_Current_City_Years",
+                    "Marital_Status",
+                    "Product_Category_1",
+                    "Product_Category_2",
+                    "Product_Category_3",
+                    "Purchase",
+                ],
+            )
+            st.dataframe(prediction_df)
+            create_prediction_table(prediction_df)
         else:
-            st.error(f"Failed to get prediction. Please try again later. Error: {res.status_code}")
-            error_details = res.json()
-            st.write("Error Details:", error_details)  
+            st.error(
+                f"Failed to get prediction. Please try again later. Error: {res.status_code}"
+            )
 
     file = st.file_uploader("Insert CSV FILES")
 
@@ -199,21 +211,23 @@ if page == "Get Prediction":
         if file is None:
             st.error("Please upload a CSV file.")
         else:
-            csv_file = pd.read_csv(file)
-            base_filename = datetime.datetime.now().strftime("%Y%m%d")
-            csv_file.to_csv(f"airflow/data/Clean_Data/{base_filename}.csv", index=False)
-            csv_file = csv_file.drop(["quality", "Id"], axis=1)
-            features_list = csv_file.values.tolist()
+            try:
+                response = requests.post(
+                    url="http://127.0.0.1:8000/predict-batch",
+                    files={"csv_file": file},
+                    data={"source": "webapp"},
+                )
 
-            response = requests.post(
-                url="http://127.0.0.1:8000/predict-batch",
-                data=json.dumps(features_list),
-            )
-            if response.status_code == 200:
-                predictions_df = pd.read_json(response.json()["data"], orient="records")
-                st.dataframe(predictions_df)
-            else:
-                st.error("Failed to make prediction. Please try again later.")
+                if response.status_code == 200:
+                    predictions_df = pd.DataFrame(response.json()["results"])
+                    prediction_column = predictions_df.iloc[:, -1]
+                    prediction_column = prediction_column.rename("Predicted Purchase")
+                    st.dataframe(prediction_column)
+
+                else:
+                    st.error("Failed to get batch predictions. Please try again later.")
+            except Exception as e:
+                st.error(f"An error occurred: {e}")
 
 elif page == "Get Past Prediction":
     with st.container():

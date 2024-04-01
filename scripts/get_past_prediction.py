@@ -5,13 +5,9 @@ from .make_db import db_engine
 
 def get_past_predictions(filter_option):
     try:
-        # Obtain the session from the make_db module
         session_data = db_engine()
-
-        # Check if obtaining the session was successful
         if session_data["status"] == 200:
             session = session_data["session"]
-
             past_predictions = []
             if filter_option == "webapp":
                 result = (

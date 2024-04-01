@@ -1,22 +1,31 @@
 import datetime
 from sqlalchemy import Column, Integer, Float, String, DateTime
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine
+from scripts.__init__ import DB_HOST, DB_NAME, DB_USER, DB_PORT
 from sqlalchemy.ext.declarative import declarative_base
 
+# engine = create_engine(f"postgresql://{DB_USER}@{DB_HOST}:{DB_PORT}/{DB_NAME}")
+#
+# # Define Session
+# Session = sessionmaker(bind=engine)
 Base = declarative_base()
 
 
 class Prediction_Table(Base):
     __tablename__ = "Prediction_Table"
     id = Column(Integer, primary_key=True)
-    occupation = Column(String)
-    marital_status = Column(String)
-    product_category_1 = Column(String)
-    product_category_2 = Column(String)
-    product_category_3 = Column(String)
-    age = Column(String)
-    gender = Column(String)
-    city_category = Column(String)
-    stay_in_current_city_years = Column(Integer)
-    predicted_purchase = Column(Float)
+    occupation = Column(Float)
+    marital_status = Column(Float)
+    product_category_1 = Column(Float)
+    product_category_2 = Column(Float)
+    product_category_3 = Column(Float)
+    age = Column(Float)
+    gender = Column(Float)
+    city_category = Column(Float)
+    stay_in_current_city_years = Column(Float)
+    purchase = Column(Float)
     source = Column(String)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
+
+
