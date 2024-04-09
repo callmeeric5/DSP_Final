@@ -13,8 +13,7 @@ def db_engine():
         Session = sessionmaker(bind=engine)
         session = Session()
         print("Database connection established")
-
-        return {"engine": engine, "Session": session, "status": 200}
+        return {"engine": engine, "session": session, "status": 200}
     except Exception as e:
         print(e.args)
         return {"status": 500}

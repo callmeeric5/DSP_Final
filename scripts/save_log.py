@@ -8,5 +8,5 @@ def save_data_logs(session, error_dict):
             session.add(error)
         return {"status": 200}
     except Exception as e:
-        print(e)  # Log the exception for debugging purposes
+        print(e)
         return {"status": 500}

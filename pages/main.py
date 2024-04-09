@@ -1,18 +1,15 @@
 import streamlit as st
 import requests
-
-import datetime
-import json
 import pandas as pd
 import sys
 import os
-from scripts.save_to_db import create_prediction_table
 
-# Get the current directory of the script
+
+
 current_dir = os.path.dirname(os.path.realpath(__file__))
-# Construct the path to the parent directory of the 'scripts' package
+
 parent_dir = os.path.abspath(os.path.join(current_dir, ".."))
-# Add the parent directory to the Python path
+
 sys.path.insert(0, parent_dir)
 
 st.set_page_config(page_title="Black Friday", page_icon="🛍️", layout="wide")
@@ -199,7 +196,7 @@ if page == "Get Prediction":
                 ],
             )
             st.dataframe(prediction_df)
-            # create_prediction_table(prediction_df)
+
         else:
             st.error(
                 f"Failed to get prediction. Please try again later. Error: {res.status_code}"

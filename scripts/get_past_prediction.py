@@ -10,7 +10,7 @@ def get_past_predictions(
         session_data = db_engine()
         print(session_data)
         if session_data["status"] == 200:
-            session = session_data["Session"]  # Access session object correctly
+            session = session_data["session"]  # Access session object correctly
             past_predictions = []
 
             # Construct the base query

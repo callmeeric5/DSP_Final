@@ -15,10 +15,6 @@ from fastapi import Query
 
 app = FastAPI()
 
-# DATABASE_URL = "postgresql://admin:admin@localhost:0224/Blackfriday"
-# engine = create_engine(DATABASE_URL)
-# Session = sessionmaker(bind=engine)
-
 DATABASE_URL = "postgresql://admin:admin@localhost:0224/Blackfriday"
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
