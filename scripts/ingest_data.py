@@ -84,7 +84,7 @@ import requests
     default_args={"owner": "airflow"},
     schedule=timedelta(minutes=2),
     start_date=today().add(hours=-1),
-    dagrun_timeout=timedelta(minutes=1),
+    dagrun_timeout=timedelta(minutes=20),
 )
 def ingest_data():
     @task
