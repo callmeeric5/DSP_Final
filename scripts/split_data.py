@@ -4,7 +4,7 @@ import pandas as pd
 
 def split_dataset():
     output_folder = '../data_raw/Ingestion'
-    num_files = 20
+    num_files = 50
     dataset_path = '../data_raw/data_with_errors.csv'
     try:
         df = pd.read_csv(dataset_path)

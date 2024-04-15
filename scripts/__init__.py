@@ -1,5 +1,4 @@
 from pathlib import Path
-
 DB_HOST = "localhost"
 DB_NAME = "blackfriday"
 DB_USER = "ericwindsor"
