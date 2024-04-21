@@ -47,3 +47,9 @@ https://www.postgresql.org/download/
 
 `streamlit run pages/main.py`
 
+**Run Airflow**
+```
+export AIRFLOW_HOME=${PWD}/airflow
+airflow scheduler
+airflow webserver
+```
