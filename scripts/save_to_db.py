@@ -70,10 +70,10 @@ from scripts.make_predticiton_table import Prediction_Table
 #     except Exception as e:
 #         return {"status": 500, "message": f"An error occurred: {e}"}
 
+
 def create_prediction_table(predictions_df: pd.DataFrame, source: str = "webapp"):
     try:
         session_data = db_engine()
-
         if session_data["status"] == 200:
             session = session_data["session"]
 
@@ -89,16 +89,21 @@ def create_prediction_table(predictions_df: pd.DataFrame, source: str = "webapp"
                     age=prediction_data["Age"],
                     gender=prediction_data["Gender"],
                     city_category=prediction_data["City_Category"],
-                    stay_in_current_city_years=prediction_data["Stay_In_Current_City_Years"],
+                    stay_in_current_city_years=prediction_data[
+                        "Stay_In_Current_City_Years"
+                    ],
                     purchase=prediction_data["Purchase"],
-                    source=source,
                 )
                 session.add(prediction)
 
             session.commit()
             session.close()
 
-            return {"status": 200, "message": "Prediction data inserted/updated successfully"}
+            return {
+                "status": 200,
+                "message": "Prediction data inserted/updated successfully",
+                "source": source
+            }
         else:
             return {"status": 500, "message": "Failed to obtain database session."}
     except Exception as e:

@@ -19,4 +19,6 @@ class Prediction_Table(Base):
     stay_in_current_city_years = Column(Float)
     purchase = Column(Float)
     source = Column(String)
-    created_at = Column(DateTime, default=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+    created_at = Column(
+        DateTime, default=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    )

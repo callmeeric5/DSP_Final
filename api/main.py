@@ -1,7 +1,5 @@
 from fastapi import FastAPI, UploadFile, HTTPException
 from pydantic import BaseModel
-from fastapi import Depends
-from sqlalchemy.orm import Session
 import pandas as pd
 from scripts.save_to_db import create_prediction_table
 from scripts.inference import predict
@@ -10,9 +8,6 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import logging
 from fastapi.responses import JSONResponse
-from datetime import datetime
-from fastapi import Query
-
 app = FastAPI()
 
 DATABASE_URL = "postgresql://admin:admin@localhost:0224/Blackfriday"

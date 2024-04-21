@@ -10,13 +10,9 @@ def get_past_predictions(
         session_data = db_engine()
         print(session_data)
         if session_data["status"] == 200:
-            session = session_data["session"]  # Access session object correctly
+            session = session_data["session"]
             past_predictions = []
-
-            # Construct the base query
             query = session.query(Prediction_Table)
-
-            # Apply filter_option
             if filter_option == "webapp":
                 query = query.filter(Prediction_Table.source == "webapp")
             elif filter_option == "scheduled":
@@ -24,16 +20,13 @@ def get_past_predictions(
             elif filter_option == "all":
                 query = query.filter(Prediction_Table.source == "all")
 
-            # Apply date filters
             if start_date:
                 query = query.filter(Prediction_Table.created_at >= start_date)
             if end_date:
                 query = query.filter(Prediction_Table.created_at <= end_date)
 
-            # Execute the query
             result = query.all()
 
-            # Convert the results to dictionary format
             for item in result:
                 prediction_dict = {
                     "id": item.id,

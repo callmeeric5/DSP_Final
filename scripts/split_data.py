@@ -3,9 +3,9 @@ import pandas as pd
 
 
 def split_dataset():
-    output_folder = '../data_raw/Ingestion'
-    num_files = 50
-    dataset_path = '../data_raw/data_with_errors.csv'
+    output_folder = "../data_raw/Ingestion"
+    num_files = 1000
+    dataset_path = "../data_raw/data_with_errors.csv"
     try:
         df = pd.read_csv(dataset_path)
     except FileNotFoundError:
@@ -23,5 +23,3 @@ def split_dataset():
         subset.to_csv(os.path.join(output_folder, f"data_{i + 1}.csv"), index=False)
 
     print(f"Dataset split into {num_files} files in the '{output_folder}' folder.")
-
-

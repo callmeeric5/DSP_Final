@@ -1,4 +1,5 @@
 from pathlib import Path
+
 DB_HOST = "localhost"
 DB_NAME = "blackfriday"
 DB_USER = "ericwindsor"
@@ -22,3 +23,5 @@ NUMERICAL_FEATURES = [
     "Product_Category_3",
 ]
 CATEGORICAL_FEATURES = ["Age", "Gender", "City_Category", "Stay_In_Current_City_Years"]
+GOOD_DATA_FOLDER = "/Users/ericwindsor/Documents/EPITA_ERIC/Data_Scicence_Production/DSP_Final/data_raw/split_data/Clean_Data"
+BAD_DATA_FOLDER = "/Users/ericwindsor/Documents/EPITA_ERIC/Data_Scicence_Production/DSP_Final/data_raw/Bad_Data"
