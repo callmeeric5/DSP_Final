@@ -3,21 +3,395 @@
   "expectation_suite_name": "black_friday.csv.warning",
   "expectations": [
     {
-      "expectation_type": "expect_table_row_count_to_be_between",
+      "expectation_type": "expect_column_values_to_be_in_set",
       "kwargs": {
-        "max_value": 11680,
-        "min_value": 11680
+        "column": "City_Category",
+        "value_set": [
+          "A",
+          "B",
+          "C"
+        ]
       },
-      "meta": {
-        "profiler_details": {
-          "metric_configuration": {
-            "domain_kwargs": {},
-            "metric_name": "table.row_count",
-            "metric_value_kwargs": null
+      "meta": {},
+      "rendered_content": [
+        {
+          "name": "atomic.prescriptive.summary",
+          "value": {
+            "params": {
+              "column": {
+                "schema": {
+                  "type": "string"
+                },
+                "value": "City_Category"
+              },
+              "v__0": {
+                "schema": {
+                  "type": "string"
+                },
+                "value": "A"
+              },
+              "v__1": {
+                "schema": {
+                  "type": "string"
+                },
+                "value": "B"
+              },
+              "v__2": {
+                "schema": {
+                  "type": "string"
+                },
+                "value": "C"
+              },
+              "value_set": {
+                "schema": {
+                  "type": "array"
+                },
+                "value": [
+                  "A",
+                  "B",
+                  "C"
+                ]
+              }
+            },
+            "schema": {
+              "type": "com.superconductive.rendered.string"
+            },
+            "template": "$column values must belong to this set: $v__0 $v__1 $v__2."
           },
-          "num_batches": 1
+          "value_type": "StringValueType"
         }
-      }
+      ]
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": {
+        "column": "City_Category"
+      },
+      "meta": {},
+      "rendered_content": [
+        {
+          "name": "atomic.prescriptive.summary",
+          "value": {
+            "params": {
+              "column": {
+                "schema": {
+                  "type": "string"
+                },
+                "value": "City_Category"
+              }
+            },
+            "schema": {
+              "type": "com.superconductive.rendered.string"
+            },
+            "template": "$column values must never be null."
+          },
+          "value_type": "StringValueType"
+        }
+      ]
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_between",
+      "kwargs": {
+        "column": "Product_Category_2",
+        "max_value": 18,
+        "min_value": 2
+      },
+      "meta": {},
+      "rendered_content": [
+        {
+          "name": "atomic.prescriptive.summary",
+          "value": {
+            "params": {
+              "column": {
+                "schema": {
+                  "type": "string"
+                },
+                "value": "Product_Category_2"
+              },
+              "max_value": {
+                "schema": {
+                  "type": "number"
+                },
+                "value": 18
+              },
+              "min_value": {
+                "schema": {
+                  "type": "number"
+                },
+                "value": 2
+              }
+            },
+            "schema": {
+              "type": "com.superconductive.rendered.string"
+            },
+            "template": "$column values must be greater than or equal to $min_value and less than or equal to $max_value."
+          },
+          "value_type": "StringValueType"
+        }
+      ]
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": {
+        "column": "Product_Category_2"
+      },
+      "meta": {},
+      "rendered_content": [
+        {
+          "name": "atomic.prescriptive.summary",
+          "value": {
+            "params": {
+              "column": {
+                "schema": {
+                  "type": "string"
+                },
+                "value": "Product_Category_2"
+              }
+            },
+            "schema": {
+              "type": "com.superconductive.rendered.string"
+            },
+            "template": "$column values must never be null."
+          },
+          "value_type": "StringValueType"
+        }
+      ]
+    },
+    {
+      "expectation_type": "expect_column_values_to_not_be_null",
+      "kwargs": {
+        "column": "Product_Category_3"
+      },
+      "meta": {},
+      "rendered_content": [
+        {
+          "name": "atomic.prescriptive.summary",
+          "value": {
+            "params": {
+              "column": {
+                "schema": {
+                  "type": "string"
+                },
+                "value": "Product_Category_3"
+              }
+            },
+            "schema": {
+              "type": "com.superconductive.rendered.string"
+            },
+            "template": "$column values must never be null."
+          },
+          "value_type": "StringValueType"
+        }
+      ]
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_in_set",
+      "kwargs": {
+        "column": "Gender",
+        "value_set": [
+          "M",
+          "F"
+        ]
+      },
+      "meta": {},
+      "rendered_content": [
+        {
+          "name": "atomic.prescriptive.summary",
+          "value": {
+            "params": {
+              "column": {
+                "schema": {
+                  "type": "string"
+                },
+                "value": "Gender"
+              },
+              "v__0": {
+                "schema": {
+                  "type": "string"
+                },
+                "value": "M"
+              },
+              "v__1": {
+                "schema": {
+                  "type": "string"
+                },
+                "value": "F"
+              },
+              "value_set": {
+                "schema": {
+                  "type": "array"
+                },
+                "value": [
+                  "M",
+                  "F"
+                ]
+              }
+            },
+            "schema": {
+              "type": "com.superconductive.rendered.string"
+            },
+            "template": "$column values must belong to this set: $v__0 $v__1."
+          },
+          "value_type": "StringValueType"
+        }
+      ]
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_of_type",
+      "kwargs": {
+        "column": "Occupation",
+        "type_": "int"
+      },
+      "meta": {},
+      "rendered_content": [
+        {
+          "name": "atomic.prescriptive.summary",
+          "value": {
+            "params": {
+              "column": {
+                "schema": {
+                  "type": "string"
+                },
+                "value": "Occupation"
+              },
+              "type_": {
+                "schema": {
+                  "type": "string"
+                },
+                "value": "int"
+              }
+            },
+            "schema": {
+              "type": "com.superconductive.rendered.string"
+            },
+            "template": "$column values must be of type $type_."
+          },
+          "value_type": "StringValueType"
+        }
+      ]
+    },
+    {
+      "expectation_type": "expect_column_values_to_be_between",
+      "kwargs": {
+        "column": "Product_Category_1",
+        "max_value": 20,
+        "min_value": 1
+      },
+      "meta": {},
+      "rendered_content": [
+        {
+          "name": "atomic.prescriptive.summary",
+          "value": {
+            "params": {
+              "column": {
+                "schema": {
+                  "type": "string"
+                },
+                "value": "Product_Category_1"
+              },
+              "max_value": {
+                "schema": {
+                  "type": "number"
+                },
+                "value": 20
+              },
+              "min_value": {
+                "schema": {
+                  "type": "number"
+                },
+                "value": 1
+              }
+            },
+            "schema": {
+              "type": "com.superconductive.rendered.string"
+            },
+            "template": "$column values must be greater than or equal to $min_value and less than or equal to $max_value."
+          },
+          "value_type": "StringValueType"
+        }
+      ]
+    },
+    {
+      "expectation_type": "expect_column_values_to_match_regex",
+      "kwargs": {
+        "column": "Age",
+        "mostly": 1.0,
+        "regex": "^\\d{2}-\\d{2}$|^\\d{2}\\+$"
+      },
+      "meta": {},
+      "rendered_content": [
+        {
+          "name": "atomic.prescriptive.summary",
+          "value": {
+            "params": {
+              "column": {
+                "schema": {
+                  "type": "string"
+                },
+                "value": "Age"
+              },
+              "mostly": {
+                "schema": {
+                  "type": "number"
+                },
+                "value": 1.0
+              },
+              "regex": {
+                "schema": {
+                  "type": "string"
+                },
+                "value": "^\\d{2}-\\d{2}$|^\\d{2}\\+$"
+              }
+            },
+            "schema": {
+              "type": "com.superconductive.rendered.string"
+            },
+            "template": "$column values must match this regular expression: $regex."
+          },
+          "value_type": "StringValueType"
+        }
+      ]
+    },
+    {
+      "expectation_type": "expect_column_values_to_match_regex",
+      "kwargs": {
+        "column": "Product_Category_3",
+        "mostly": 1.0,
+        "regex": "^\\d+(\\.\\d+)?$"
+      },
+      "meta": {},
+      "rendered_content": [
+        {
+          "name": "atomic.prescriptive.summary",
+          "value": {
+            "params": {
+              "column": {
+                "schema": {
+                  "type": "string"
+                },
+                "value": "Product_Category_3"
+              },
+              "mostly": {
+                "schema": {
+                  "type": "number"
+                },
+                "value": 1.0
+              },
+              "regex": {
+                "schema": {
+                  "type": "string"
+                },
+                "value": "^\\d+(\\.\\d+)?$"
+              }
+            },
+            "schema": {
+              "type": "com.superconductive.rendered.string"
+            },
+            "template": "$column values must match this regular expression: $regex."
+          },
+          "value_type": "StringValueType"
+        }
+      ]
     },
     {
       "expectation_type": "expect_table_columns_to_match_set",
@@ -36,95 +410,105 @@
           "Product_ID"
         ]
       },
-      "meta": {}
-    },
-    {
-      "expectation_type": "expect_column_values_to_be_in_set",
-      "kwargs": {
-        "column": "City_Category",
-        "value_set": [
-          "A",
-          "B",
-          "C"
-        ]
-      },
-      "meta": {}
-    },
-    {
-      "expectation_type": "expect_column_values_to_not_be_null",
-      "kwargs": {
-        "column": "City_Category"
-      },
-      "meta": {}
-    },
-    {
-      "expectation_type": "expect_column_values_to_be_between",
-      "kwargs": {
-        "column": "Product_Category_2",
-        "max_value": 18,
-        "min_value": 2
-      },
-      "meta": {}
-    },
-    {
-      "expectation_type": "expect_column_values_to_not_be_null",
-      "kwargs": {
-        "column": "Product_Category_2"
-      },
-      "meta": {}
-    },
-    {
-      "expectation_type": "expect_column_values_to_not_be_null",
-      "kwargs": {
-        "column": "Product_Category_3"
-      },
-      "meta": {}
-    },
-    {
-      "expectation_type": "expect_column_values_to_be_in_set",
-      "kwargs": {
-        "column": "Gender",
-        "value_set": [
-          "M",
-          "F"
-        ]
-      },
-      "meta": {}
-    },
-    {
-      "expectation_type": "expect_column_values_to_be_of_type",
-      "kwargs": {
-        "column": "Occupation",
-        "type_": "int"
-      },
-      "meta": {}
-    },
-    {
-      "expectation_type": "expect_column_values_to_be_between",
-      "kwargs": {
-        "column": "Product_Category_1",
-        "max_value": 20,
-        "min_value": 1
-      },
-      "meta": {}
-    },
-    {
-      "expectation_type": "expect_column_values_to_match_regex",
-      "kwargs": {
-        "column": "Age",
-        "mostly": 1.0,
-        "regex": "^\\d{2}-\\d{2}$|^\\d{2}\\+$"
-      },
-      "meta": {}
-    },
-    {
-      "expectation_type": "expect_column_values_to_match_regex",
-      "kwargs": {
-        "column": "Product_Category_3",
-        "mostly": 1.0,
-        "regex": "^\\d+(\\.\\d+)?$"
-      },
-      "meta": {}
+      "meta": {},
+      "rendered_content": [
+        {
+          "name": "atomic.prescriptive.summary",
+          "value": {
+            "params": {
+              "column_set": {
+                "schema": {
+                  "type": "array"
+                },
+                "value": [
+                  "User_ID",
+                  "City_Category",
+                  "Occupation",
+                  "Product_Category_3",
+                  "Stay_In_Current_City_Years",
+                  "Product_Category_2",
+                  "Age",
+                  "Product_Category_1",
+                  "Gender",
+                  "Marital_Status",
+                  "Product_ID"
+                ]
+              },
+              "column_set_0": {
+                "schema": {
+                  "type": "string"
+                },
+                "value": "User_ID"
+              },
+              "column_set_1": {
+                "schema": {
+                  "type": "string"
+                },
+                "value": "City_Category"
+              },
+              "column_set_10": {
+                "schema": {
+                  "type": "string"
+                },
+                "value": "Product_ID"
+              },
+              "column_set_2": {
+                "schema": {
+                  "type": "string"
+                },
+                "value": "Occupation"
+              },
+              "column_set_3": {
+                "schema": {
+                  "type": "string"
+                },
+                "value": "Product_Category_3"
+              },
+              "column_set_4": {
+                "schema": {
+                  "type": "string"
+                },
+                "value": "Stay_In_Current_City_Years"
+              },
+              "column_set_5": {
+                "schema": {
+                  "type": "string"
+                },
+                "value": "Product_Category_2"
+              },
+              "column_set_6": {
+                "schema": {
+                  "type": "string"
+                },
+                "value": "Age"
+              },
+              "column_set_7": {
+                "schema": {
+                  "type": "string"
+                },
+                "value": "Product_Category_1"
+              },
+              "column_set_8": {
+                "schema": {
+                  "type": "string"
+                },
+                "value": "Gender"
+              },
+              "column_set_9": {
+                "schema": {
+                  "type": "string"
+                },
+                "value": "Marital_Status"
+              }
+            },
+            "schema": {
+              "type": "com.superconductive.rendered.string"
+            },
+            "template": "Must have at least these columns (in any order): $column_set_0 $column_set_1 $column_set_2 $column_set_3 $column_set_4 $column_set_5 $column_set_6 $column_set_7 $column_set_8 $column_set_9 $column_set_10"
+          },
+          "value_type": "StringValueType"
+        }
+      ]
     }
   ],
   "ge_cloud_id": null,

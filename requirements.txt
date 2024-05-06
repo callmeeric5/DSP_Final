@@ -1,10 +1,10 @@
-fastapi~=0.110.2
+fastapi~=0.103.0
 joblib==1.2.0
 pandas~=2.1.4
 pendulum==3.0.0
 pydantic~=2.5.3
 Requests==2.31.0
-SQLAlchemy~=2.0.29
+SQLAlchemy~=1.4.36
 streamlit==1.32.0
 xgboost==2.0.3
 apache-airflow==2.9.0

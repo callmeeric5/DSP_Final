@@ -3,49 +3,42 @@ import pandas as pd
 from datetime import datetime
 import requests
 
-from great_expectations.core.batch import RuntimeBatchRequest
-
 
 def validate_data(df):
-    batch_request = RuntimeBatchRequest(
-        datasource_name="black_friday",
-        data_connector_name="default_runtime_data_connector_name",
-        data_asset_name="black_friday",
-        runtime_parameters={"batch_data": df},
-        batch_identifiers={"runtime_batch_identifier_name": "default_identifier"},
-    )
     context = gx.get_context()
-    validator = context.get_validator(
-        batch_request=batch_request, expectation_suite_name="black_friday.csv.warning"
+    validation_results = context.run_checkpoint(
+        checkpoint_name="black_friday_checkpoint", batch_data=df
     )
-
-    validation_results = validator.validate()
-    errors = []
+    context.build_data_docs()
     invalid_rows_data = pd.DataFrame(columns=df.columns)
-    for expectation_result in validation_results["results"]:
-        if not expectation_result["success"]:
-            column = find_column_key(expectation_result["expectation_config"]["kwargs"])
-            if "partial_unexpected_list" in expectation_result["result"]:
-                ls = expectation_result["result"]["partial_unexpected_list"]
+    run_id = validation_results["run_id"]
+    run_stats = None
+    documentation_link = None
+    errors = {}  # Using a dictionary instead of a list
+    for result_id, result_data in validation_results["run_results"].items():
+        validation_result = result_data["validation_result"]
+        if run_stats is None:
+            run_stats = validation_result.get("statistics", {})
+        if documentation_link is None:
+            documentation_link = result_data["actions_results"]["update_data_docs"][
+                "local_site"
+            ]
+        for expectation_result in validation_result["results"]:
+            if not expectation_result["success"]:
+                column = expectation_result["expectation_config"]["kwargs"].get(
+                    "column"
+                )
+                result_info = expectation_result["result"]
+                partial_unexpected_list = result_info.get("partial_unexpected_list", [])
                 invalid_rows_data = pd.concat(
-                    [invalid_rows_data, df[df[column].isin(ls)]]
+                    [invalid_rows_data, df[df[column].isin(partial_unexpected_list)]]
                 )
-                missing_percent = expectation_result["result"].get(
-                    "missing_percent", "N/A"
-                )
-                unexpected_percent = expectation_result["result"].get(
-                    "unexpected_percent", "N/A"
-                )
+                # Create or update entry in errors dictionary for each column
+                errors[column] = {
+                    "missing_percent": result_info.get("missing_percent", "0.0"),
+                    "unexpected_percent": result_info.get("unexpected_percent", "0.0"),
+                }
 
-                errors.append(
-                    f"Validation failed for column '{column}', missing percent: {missing_percent}, "
-                    f"unexpected_percent: {unexpected_percent}"
-                )
-
-            else:
-                errors.append(
-                    "No partial unexpected list found for column: {}".format(column)
-                )
     filepath_bad = (
         f"/Users/ericwindsor/Documents/EPITA_ERIC/Data_Scicence_Production"
         f"/DSP_Final/data_raw/split_data/Bad_Data/{datetime.now()}.csv"
@@ -57,50 +50,46 @@ def validate_data(df):
     df.drop(invalid_rows_data.index, inplace=True)
     df.to_csv(filepath_clean, index=False)
     invalid_rows_data.to_csv(filepath_bad, index=False)
-    # print(validation_results)
-    return errors
+    meta_info = {
+        "html": documentation_link,
+        "run_id": getattr(run_id, "run_name", "N/A"),
+        "run_time": getattr(run_id, "run_time", "N/A"),
+        "statistics": run_stats,
+    }
+
+    final_report = {"meta": meta_info, "errors": errors}
+    return final_report
 
 
-def find_column_key(kwargs_dict):
-    for key, value in kwargs_dict.items():
-        if isinstance(value, str) and "column" in key.lower():
-            return value
-    return None
-
-
-def send_teams_alert(errors):
+def send_teams_alert(report):
     webhook_url = (
         "https://epitafr.webhook.office.com/webhookb2/"
         "c291b763-1eb0-48f6-85ae-652bc5ad8949@3534b3d7-316c-4bc9-9ede-605c860f49d2/"
         "IncomingWebhook/0b2445947a6342489b4d086b6e67e64e/275af251-9494-48df-a4d0-6ba6842636fc"
     )
-    errors = [str(error) for error in errors]
-    error_message = "\n".join(errors)
+    print(report)
+    meta_info = report.get("meta")
+    errors = report.get("errors")
+    message_lines = [
+        f"**Documentation**: {meta_info['html']}",
+        f"**Run ID**: {meta_info['run_id']}",
+        f"**Run Time**: {meta_info['run_time']}",
+        f"**Statistics**: {meta_info['statistics']}",
+    ]
 
-    payload = {
-        "text": f"Data validation failed with the following errors:\n{error_message}"
-    }
+    # Iterate over each column and its error details in the dictionary
+    for column, error_details in errors.items():
+        message_lines.append(
+            f"Column: {column}, Missing Percent: {error_details['missing_percent']}, Unexpected Percent: {error_details['unexpected_percent']}"
+        )
 
-    try:
-        response = requests.post(webhook_url, json=payload)
+    message = "<br>".join(message_lines)
+    payload = {"text": message}
 
-        if response.status_code == 200:
-            print("Alert sent successfully to Teams channel.")
-        else:
-            print(
-                f"Failed to send alert to Teams channel. Status code: {response.status_code}"
-            )
-            print(f"Response content: {response.content}")
-    except Exception as e:
-        print(f"An error occurred while sending the alert: {e}")
-
-
-# # # # Load the input data
-# input_data_df = pd.read_csv("../data_raw/Ingestion/data_55.csv")
-# #
-# # Validate the data
-# errors = validate_data(input_data_df)
-#
-# # Send alert if validation failed
-# if errors:
-#     send_teams_alert(errors)
+    response = requests.post(webhook_url, json=payload)
+    if response.status_code == 200:
+        print("Alert sent successfully to Teams channel.")
+    else:
+        print(
+            f"Failed to send alert to Teams channel. Status code: {response.status_code}, Response: {response.text}"
+        )

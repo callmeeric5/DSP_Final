@@ -3,9 +3,9 @@ from datetime import timedelta
 from airflow.decorators import dag, task
 import pandas as pd
 from great_expectation import validate_data, send_teams_alert
+from save_log import save_data_logs
 import os
 import random
-
 
 from _scproxy import _get_proxy_settings
 
@@ -18,7 +18,7 @@ os.environ["NO_PROXY"] = "*"
     description="Ingest data",
     tags=["data-quality files"],
     default_args={"owner": "airflow"},
-    schedule=timedelta(minutes=2),
+    schedule=timedelta(minutes=15),
     start_date=today().add(hours=-1),
     dagrun_timeout=timedelta(minutes=20),
 )
@@ -31,21 +31,27 @@ def ingest_data():
     @task
     def validate_data_gx(df):
         print("The validate_data_gx is running")
-        errors = validate_data(df)
-        errors = [str(error) for error in errors]
-        return errors
+        report = validate_data(df)
+
+        return report
 
     @task
-    def send_alert(errors):
-        if errors:
-            send_teams_alert(errors)
+    def send_alert(error):
+        if error:
+            send_teams_alert(error)
         else:
             print("No data validation errors. Skipping alert.")
+
+    @task
+    def save_data_errors(validation_results):
+        save_data_logs(validation_results)
+        print("Save data errors to database:")
 
     data_to_ingest = get_ingestion_data()
 
     errors = validate_data_gx(data_to_ingest)
     send_alert(errors)
+    save_data_errors(errors)
 
 
 def _get_ingestion_data():

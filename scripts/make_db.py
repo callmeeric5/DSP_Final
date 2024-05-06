@@ -1,9 +1,14 @@
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
-from scripts.__init__ import DB_HOST, DB_NAME, DB_USER, DB_PORT
+
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
+DB_HOST = "localhost"
+DB_NAME = "blackfriday"
+DB_USER = "ericwindsor"
+
+DB_PORT = "5432"
 
 
 def db_engine():

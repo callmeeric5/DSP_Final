@@ -1,14 +1,17 @@
 import datetime
-from sqlalchemy import Column, Integer, Text, DateTime, VARCHAR
+from sqlalchemy import Column, Integer, DateTime, String
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
 
 class Logger(Base):
-    __tablename__ = "data_logger"
+    __tablename__ = "Validation_Table"
 
     id = Column(Integer, primary_key=True)
-    files = Column(VARCHAR(500))
-    logs = Column(Text)
-    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+    RunID = Column(String)
+    meta = Column(String)
+    errors = Column(String)
+    created_at = Column(
+        DateTime, default=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    )

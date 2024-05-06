@@ -95,4 +95,5 @@ import requests
 # res = get_past_predictions('webapp','2024-04-02','2024-04-03')
 # print(res)
 from scripts.split_data import split_dataset
+
 split_dataset()

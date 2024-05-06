@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 from sqlalchemy import Column, Integer, Float, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -20,5 +20,5 @@ class Prediction_Table(Base):
     purchase = Column(Float)
     source = Column(String)
     created_at = Column(
-        DateTime, default=datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        DateTime, default=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     )
