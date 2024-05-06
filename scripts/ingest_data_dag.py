@@ -18,7 +18,7 @@ os.environ["NO_PROXY"] = "*"
     description="Ingest data",
     tags=["data-quality files"],
     default_args={"owner": "airflow"},
-    schedule=timedelta(minutes=15),
+    schedule=timedelta(minutes=5),
     start_date=today().add(hours=-1),
     dagrun_timeout=timedelta(minutes=20),
 )

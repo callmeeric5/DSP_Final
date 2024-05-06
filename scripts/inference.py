@@ -1,7 +1,7 @@
 import pandas as pd
 
-from preprocess import preprocess
-from __init__ import MODEL_PATH
+from scripts.preprocess import preprocess
+from scripts.__init__ import MODEL_PATH
 import joblib
 
 

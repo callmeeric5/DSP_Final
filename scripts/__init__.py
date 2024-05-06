@@ -1,5 +1,6 @@
 from pathlib import Path
-
+import sys,os
+sys.path.append(os.getcwd())
 DB_HOST = "localhost"
 DB_NAME = "blackfriday"
 DB_USER = "ericwindsor"

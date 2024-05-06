@@ -2,19 +2,36 @@ import great_expectations as gx
 import pandas as pd
 from datetime import datetime
 import requests
-
+from great_expectations.core.batch import RuntimeBatchRequest
 
 def validate_data(df):
     context = gx.get_context()
-    validation_results = context.run_checkpoint(
-        checkpoint_name="black_friday_checkpoint", batch_data=df
+    batch_request = RuntimeBatchRequest(
+        datasource_name="black_friday",
+        data_connector_name="default_runtime_data_connector_name",
+        data_asset_name="black_friday",  # This should match with the asset name defined in the RuntimeDataConnector
+        runtime_parameters={"batch_data": df},
+        batch_identifiers={"runtime_batch_identifier_name": "default_identifier"}
     )
+
+    validation_results = context.run_checkpoint(
+        checkpoint_name="black_friday_checkpoint",
+        validations=[
+            {"batch_request": batch_request,
+             "expectation_suite_name": "black_friday.csv.warning"}
+
+        ]
+    )
+
+    # validation_results = context.run_checkpoint(
+    #     checkpoint_name="black_friday_checkpoint", batch_data=df
+    # )
     context.build_data_docs()
     invalid_rows_data = pd.DataFrame(columns=df.columns)
     run_id = validation_results["run_id"]
     run_stats = None
     documentation_link = None
-    errors = {}  # Using a dictionary instead of a list
+    errors = {}
     for result_id, result_data in validation_results["run_results"].items():
         validation_result = result_data["validation_result"]
         if run_stats is None:
@@ -33,7 +50,6 @@ def validate_data(df):
                 invalid_rows_data = pd.concat(
                     [invalid_rows_data, df[df[column].isin(partial_unexpected_list)]]
                 )
-                # Create or update entry in errors dictionary for each column
                 errors[column] = {
                     "missing_percent": result_info.get("missing_percent", "0.0"),
                     "unexpected_percent": result_info.get("unexpected_percent", "0.0"),

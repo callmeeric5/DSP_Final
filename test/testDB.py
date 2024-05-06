@@ -1,6 +1,3 @@
-import pandas as pd
-
-from scripts.save_to_db import create_prediction_table
 from scripts.save_log import save_data_logs
 
 

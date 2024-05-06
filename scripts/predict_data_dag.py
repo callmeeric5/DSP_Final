@@ -4,7 +4,6 @@ from datetime import timedelta
 from airflow.decorators import dag, task
 from __init__ import GOOD_DATA_FOLDER
 import os
-import requests
 from _scproxy import _get_proxy_settings
 import pandas as pd
 from inference import predict

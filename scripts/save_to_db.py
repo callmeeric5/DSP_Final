@@ -1,7 +1,7 @@
 import pandas as pd
 
-from make_db import db_engine
-from make_predticiton_table import Prediction_Table
+from scripts.make_predticiton_table import Prediction_Table
+from scripts.make_db import db_engine
 
 
 def create_prediction_table(predictions_df: pd.DataFrame, source: str = "webapp"):
