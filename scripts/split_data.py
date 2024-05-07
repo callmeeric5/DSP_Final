@@ -1,5 +1,6 @@
 import os
 import pandas as pd
+import numpy as np
 
 
 def split_dataset():
@@ -11,6 +12,9 @@ def split_dataset():
     except FileNotFoundError:
         print(f"Error: Dataset file '{dataset_path}' not found.")
         return
+
+    # Shuffle the DataFrame rows
+    df = df.sample(frac=1, random_state=42).reset_index(drop=True)
 
     os.makedirs(output_folder, exist_ok=True)
 

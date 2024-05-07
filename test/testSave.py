@@ -14,12 +14,12 @@ sample_features = {
     "Product_Category_1": [1],
     "Product_Category_2": [2],
     "Product_Category_3": [3],
-    "Purchase": [1.2]
+    "Purchase": [1.2],
 }
 
 # Create a DataFrame
 df = pd.DataFrame(sample_features)
 
 # Assuming create_prediction_table expects a DataFrame and a source string
-result = create_prediction_table(df, source='scheduled')
+result = create_prediction_table(df, source="scheduled")
 print(result)

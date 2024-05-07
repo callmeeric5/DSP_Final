@@ -16,6 +16,8 @@ This project is used for predicting the purchase on the given blackfriday datase
 * Liyang FANG
 * Rohithvishwa Vimalraj sangeethapriya
 
+## Architecture
+![img.png](img.png)
 ## Install
 **Intall project requirements**
 
@@ -30,6 +32,16 @@ for mac users:
 or:
 
 https://www.postgresql.org/download/
+
+**Intall Grafana**
+
+for mac users:
+
+`brew install grafana`
+
+or:
+
+https://grafana.com/get/
 
 ## Run
 **Go to the root of project**
@@ -52,4 +64,12 @@ https://www.postgresql.org/download/
 export AIRFLOW_HOME=${PWD}/airflow
 airflow scheduler
 airflow webserver
+```
+
+**Run Grafana**
+
+for mac users:
+```
+brew services run postgresql@14
+brew services run grafana
 ```

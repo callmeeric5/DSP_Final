@@ -62,6 +62,7 @@ def _get_ingestion_data():
         return pd.DataFrame()
     selected_file = random.choice(files)
     file_path = os.path.join(ingestion_folder, selected_file)
+    print(file_path)
     df = pd.read_csv(file_path)
     os.remove(file_path)
     print("_get_ingestion_data is running")

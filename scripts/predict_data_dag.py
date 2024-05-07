@@ -8,6 +8,7 @@ from _scproxy import _get_proxy_settings
 import pandas as pd
 from inference import predict
 from save_to_db import create_prediction_table
+
 _get_proxy_settings()
 os.environ["NO_PROXY"] = "*"
 

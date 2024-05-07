@@ -4,28 +4,27 @@ from datetime import datetime
 import requests
 from great_expectations.core.batch import RuntimeBatchRequest
 
+
 def validate_data(df):
     context = gx.get_context()
     batch_request = RuntimeBatchRequest(
         datasource_name="black_friday",
         data_connector_name="default_runtime_data_connector_name",
-        data_asset_name="black_friday",  # This should match with the asset name defined in the RuntimeDataConnector
+        data_asset_name="black_friday",
         runtime_parameters={"batch_data": df},
-        batch_identifiers={"runtime_batch_identifier_name": "default_identifier"}
+        batch_identifiers={"runtime_batch_identifier_name": "default_identifier"},
     )
 
     validation_results = context.run_checkpoint(
         checkpoint_name="black_friday_checkpoint",
         validations=[
-            {"batch_request": batch_request,
-             "expectation_suite_name": "black_friday.csv.warning"}
-
-        ]
+            {
+                "batch_request": batch_request,
+                "expectation_suite_name": "black_friday.csv.warning",
+            }
+        ],
     )
 
-    # validation_results = context.run_checkpoint(
-    #     checkpoint_name="black_friday_checkpoint", batch_data=df
-    # )
     context.build_data_docs()
     invalid_rows_data = pd.DataFrame(columns=df.columns)
     run_id = validation_results["run_id"]
@@ -93,10 +92,10 @@ def send_teams_alert(report):
         f"**Statistics**: {meta_info['statistics']}",
     ]
 
-    # Iterate over each column and its error details in the dictionary
     for column, error_details in errors.items():
         message_lines.append(
-            f"Column: {column}, Missing Percent: {error_details['missing_percent']}, Unexpected Percent: {error_details['unexpected_percent']}"
+            f"Column: {column}, Missing Percent: {error_details['missing_percent']}, Unexpected Percent: "
+            f"{error_details['unexpected_percent']}"
         )
 
     message = "<br>".join(message_lines)

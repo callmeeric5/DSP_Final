@@ -26,7 +26,7 @@ def create_prediction_table(predictions_df: pd.DataFrame, source: str = "webapp"
                         "Stay_In_Current_City_Years"
                     ],
                     purchase=prediction_data["Purchase"],
-                    source=source
+                    source=source,
                 )
                 session.add(prediction)
 
