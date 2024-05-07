@@ -17,7 +17,7 @@ This project is used for predicting the purchase on the given blackfriday datase
 * Rohithvishwa Vimalraj sangeethapriya
 
 ## Architecture
-![img.png](img.png)
+![project-architecture.png](screenshots/project-architecture.png)
 ## Install
 **Intall project requirements**
 

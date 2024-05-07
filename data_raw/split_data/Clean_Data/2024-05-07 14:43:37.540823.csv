@@ -1,0 +1,4 @@
+User_ID,Product_ID,Gender,Age,Occupation,City_Category,Stay_In_Current_City_Years,Marital_Status,Product_Category_1,Product_Category_2,Product_Category_3,gender
+1005561,P00125942,F,26-35,3,C,0,1,1.0,2.0,15.0,T
+1004601,P00182142,M,36-45,14,C,0,0,1.0,5.0,6.0,n
+1002962,P00304642,M,36-45,3,A,2,0,2.0,14.0,15.0,n
