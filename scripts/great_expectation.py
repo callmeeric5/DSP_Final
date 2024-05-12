@@ -24,7 +24,7 @@ def validate_data(df):
             }
         ],
     )
-
+    print(validation_results)
     context.build_data_docs()
     invalid_rows_data = pd.DataFrame(columns=df.columns)
     run_id = validation_results["run_id"]

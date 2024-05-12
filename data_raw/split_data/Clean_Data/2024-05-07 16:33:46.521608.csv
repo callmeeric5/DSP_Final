@@ -1,7 +1,0 @@
-User_ID,Product_ID,Gender,Age,Occupation,City_Category,Stay_In_Current_City_Years,Marital_Status,Product_Category_1,Product_Category_2,Product_Category_3
-1003121,P00000642,M,26-35,2,B,3,0,1.0,6.0,16.0
-1005186,P00110842,M,36-45,12,C,2,0,,2.0,5.0
-1004665,P00127642,M,36-45,2,C,4+,0,,2.0,15.0
-1004193,P00026042,M,55+,13,C,1,0,8.0,14.0,17.0
-1002486,P00113242,M,18-25,12,A,1,0,1.0,6.0,8.0
-1002451,P00350942,M,46-50,12,C,1,1,,4.0,5.0

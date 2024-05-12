@@ -61,10 +61,12 @@ def _get_ingestion_data():
         print("No files found in the ingestion folder.")
         return pd.DataFrame()
     selected_file = random.choice(files)
+
     file_path = os.path.join(ingestion_folder, selected_file)
-    print(file_path)
+    print(f"{file_path} is chosen")
     df = pd.read_csv(file_path)
     os.remove(file_path)
+    print(f"{file_path} is deleted")
     print("_get_ingestion_data is running")
     return df
 
