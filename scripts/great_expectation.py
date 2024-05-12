@@ -24,7 +24,7 @@ def validate_data(df):
             }
         ],
     )
-    print(validation_results)
+    # print(validation_results)
     context.build_data_docs()
     invalid_rows_data = pd.DataFrame(columns=df.columns)
     run_id = validation_results["run_id"]
@@ -44,15 +44,21 @@ def validate_data(df):
                 column = expectation_result["expectation_config"]["kwargs"].get(
                     "column"
                 )
+                error_type = expectation_result.expectation_config.expectation_type
                 result_info = expectation_result["result"]
                 partial_unexpected_list = result_info.get("partial_unexpected_list", [])
                 invalid_rows_data = pd.concat(
                     [invalid_rows_data, df[df[column].isin(partial_unexpected_list)]]
                 )
-                errors[column] = {
-                    "missing_percent": result_info.get("missing_percent", "0.0"),
-                    "unexpected_percent": result_info.get("unexpected_percent", "0.0"),
-                }
+                if column not in errors:
+                    errors[column] = {
+                        "error_types": [],
+                        "missing_percent": result_info.get("missing_percent", 0.0),
+                        "unexpected_percent": result_info.get("unexpected_percent", 0.0),
+                    }
+
+                if error_type not in errors[column]["error_types"]:
+                    errors[column]["error_types"].append(error_type)
 
     filepath_bad = (
         f"/Users/ericwindsor/Documents/EPITA_ERIC/Data_Scicence_Production"
@@ -82,7 +88,7 @@ def send_teams_alert(report):
         "c291b763-1eb0-48f6-85ae-652bc5ad8949@3534b3d7-316c-4bc9-9ede-605c860f49d2/"
         "IncomingWebhook/0b2445947a6342489b4d086b6e67e64e/275af251-9494-48df-a4d0-6ba6842636fc"
     )
-    print(report)
+    # print(report)
     meta_info = report.get("meta")
     errors = report.get("errors")
     message_lines = [
@@ -94,7 +100,7 @@ def send_teams_alert(report):
 
     for column, error_details in errors.items():
         message_lines.append(
-            f"Column: {column}, Missing Percent: {error_details['missing_percent']}, Unexpected Percent: "
+            f"Column: {column},Error_types:{error_details['error_types']} Missing Percent: {error_details['missing_percent']}, Unexpected Percent: "
             f"{error_details['unexpected_percent']}"
         )
 

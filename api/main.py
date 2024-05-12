@@ -1,7 +1,7 @@
 from fastapi import FastAPI, UploadFile, HTTPException
 from pydantic import BaseModel
 import pandas as pd
-from scripts.save_to_db import create_prediction_table
+from scripts.save_prediction import create_prediction_table
 from scripts.inference import predict
 from scripts.get_past_prediction import get_past_predictions
 from sqlalchemy import create_engine

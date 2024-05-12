@@ -1,5 +1,5 @@
 import pandas as pd
-from save_to_db import create_prediction_table
+from save_prediction import create_prediction_table
 
 # Correctly create a DataFrame from a dictionary of sample features
 sample_features = {

@@ -6,7 +6,6 @@ from great_expectation import validate_data, send_teams_alert
 from save_log import save_data_logs
 import os
 import random
-
 from _scproxy import _get_proxy_settings
 
 _get_proxy_settings()
@@ -18,7 +17,7 @@ os.environ["NO_PROXY"] = "*"
     description="Ingest data",
     tags=["data-quality files"],
     default_args={"owner": "airflow"},
-    schedule=timedelta(minutes=5),
+    schedule=timedelta(minutes=10),
     start_date=today().add(hours=-1),
     dagrun_timeout=timedelta(minutes=20),
 )

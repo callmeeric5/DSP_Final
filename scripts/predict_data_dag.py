@@ -7,7 +7,7 @@ import os
 from _scproxy import _get_proxy_settings
 import pandas as pd
 from inference import predict
-from save_to_db import create_prediction_table
+from save_prediction import create_prediction_table
 from airflow.models import Variable
 
 _get_proxy_settings()
@@ -18,12 +18,13 @@ os.environ["NO_PROXY"] = "*"
 #                     "/Documents/EPITA_ERIC/Data_Scicence_Production"
 #                     "/DSP_Final/data_raw/split_data/Clean_Data")
 
+
 @dag(
     dag_id="predict_data",
     description="Predict data",
     tags=["prediction"],
     default_args={"owner": "airflow"},
-    schedule=timedelta(minutes=2),
+    schedule=timedelta(minutes=10),
     start_date=today().add(hours=-1),
     dagrun_timeout=timedelta(minutes=20),
 )
@@ -45,7 +46,9 @@ predict_data()
 
 
 def _check_for_new_data():
-    processed_files = Variable.get("processed_files", default_var=[], deserialize_json=True)
+    processed_files = Variable.get(
+        "processed_files", default_var=[], deserialize_json=True
+    )
     all_files = os.listdir(GOOD_DATA_FOLDER)
     new_files = [f for f in all_files if f not in processed_files]
     if not new_files:
@@ -68,6 +71,7 @@ def _make_predictions(files, source):
         #     params={"source": source},
         # )
         # result = res.json()
+
         res = predict(df)
         df_res = pd.DataFrame(res, columns=["Purchase"])
         df_res = df.join(df_res)
