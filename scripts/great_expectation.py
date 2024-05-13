@@ -24,7 +24,8 @@ def validate_data(df):
             }
         ],
     )
-    # print(validation_results)
+
+    print(validation_results)
     context.build_data_docs()
     invalid_rows_data = pd.DataFrame(columns=df.columns)
     run_id = validation_results["run_id"]
@@ -32,33 +33,35 @@ def validate_data(df):
     documentation_link = None
     errors = {}
     for result_id, result_data in validation_results["run_results"].items():
-        validation_result = result_data["validation_result"]
-        if run_stats is None:
-            run_stats = validation_result.get("statistics", {})
-        if documentation_link is None:
-            documentation_link = result_data["actions_results"]["update_data_docs"][
-                "local_site"
-            ]
-        for expectation_result in validation_result["results"]:
-            if not expectation_result["success"]:
-                column = expectation_result["expectation_config"]["kwargs"].get(
-                    "column"
-                )
-                error_type = expectation_result.expectation_config.expectation_type
-                result_info = expectation_result["result"]
-                partial_unexpected_list = result_info.get("partial_unexpected_list", [])
-                invalid_rows_data = pd.concat(
-                    [invalid_rows_data, df[df[column].isin(partial_unexpected_list)]]
-                )
-                if column not in errors:
-                    errors[column] = {
-                        "error_types": [],
-                        "missing_percent": result_info.get("missing_percent", 0.0),
-                        "unexpected_percent": result_info.get("unexpected_percent", 0.0),
-                    }
 
-                if error_type not in errors[column]["error_types"]:
-                    errors[column]["error_types"].append(error_type)
+        if "black_friday" in result_data["validation_result"]["meta"]["active_batch_definition"]["data_asset_name"]:
+            validation_result = result_data["validation_result"]
+            if run_stats is None:
+                run_stats = validation_result.get("statistics", {})
+            if documentation_link is None:
+                documentation_link = result_data["actions_results"]["update_data_docs"][
+                    "local_site"
+                ]
+            for expectation_result in validation_result["results"]:
+                if not expectation_result["success"]:
+                    column = expectation_result["expectation_config"]["kwargs"].get(
+                        "column"
+                    )
+                    error_type = expectation_result.expectation_config.expectation_type
+                    result_info = expectation_result["result"]
+                    partial_unexpected_list = result_info.get("partial_unexpected_list", [])
+                    invalid_rows_data = pd.concat(
+                        [invalid_rows_data, df[df[column].isin(partial_unexpected_list)]]
+                    )
+                    if column not in errors:
+                        errors[column] = {
+                            "error_types": [],
+                            "missing_percent": result_info.get("missing_percent", 0.0),
+                            "unexpected_percent": result_info.get("unexpected_percent", 0.0),
+                        }
+
+                    if error_type not in errors[column]["error_types"]:
+                        errors[column]["error_types"].append(error_type)
 
     filepath_bad = (
         f"/Users/ericwindsor/Documents/EPITA_ERIC/Data_Scicence_Production"

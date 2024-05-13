@@ -4,7 +4,7 @@ from scripts.great_expectation import validate_data, send_teams_alert
 from scripts.save_log import save_data_logs
 
 # Load your dataset into a Pandas DataFrame
-input_data_df = pd.read_csv("../data_raw/Ingestion/data_48.csv")
+input_data_df = pd.read_csv("../data_raw/Ingestion/data_33.csv")
 errors = validate_data(input_data_df)
 print(errors)
 send_teams_alert(errors)

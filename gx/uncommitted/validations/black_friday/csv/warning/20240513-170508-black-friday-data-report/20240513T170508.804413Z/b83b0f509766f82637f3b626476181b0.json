@@ -1,0 +1,1408 @@
+{
+  "evaluation_parameters": {},
+  "meta": {
+    "active_batch_definition": {
+      "batch_identifiers": {
+        "runtime_batch_identifier_name": "default_identifier"
+      },
+      "data_asset_name": "black_friday",
+      "data_connector_name": "default_runtime_data_connector_name",
+      "datasource_name": "black_friday"
+    },
+    "batch_markers": {
+      "ge_load_time": "20240513T170603.150064Z",
+      "pandas_data_fingerprint": "9f182b173b97d085e172abc34cc0730c"
+    },
+    "batch_spec": {
+      "batch_data": "PandasDataFrame",
+      "data_asset_name": "black_friday"
+    },
+    "checkpoint_id": null,
+    "checkpoint_name": "black_friday_checkpoint",
+    "expectation_suite_name": "black_friday.csv.warning",
+    "great_expectations_version": "0.18.12",
+    "run_id": {
+      "run_name": "20240513-170508-black-friday-data-report",
+      "run_time": "2024-05-13T19:05:08.804413+02:00"
+    },
+    "validation_id": null,
+    "validation_time": "20240513T170603.155496Z"
+  },
+  "results": [
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_be_in_set",
+        "kwargs": {
+          "batch_id": "b83b0f509766f82637f3b626476181b0",
+          "column": "City_Category",
+          "value_set": [
+            "A",
+            "B",
+            "C"
+          ]
+        },
+        "meta": {},
+        "rendered_content": [
+          {
+            "name": "atomic.prescriptive.summary",
+            "value": {
+              "params": {
+                "column": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "value": "City_Category"
+                },
+                "v__0": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "value": "A"
+                },
+                "v__1": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "value": "B"
+                },
+                "v__2": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "value": "C"
+                },
+                "value_set": {
+                  "schema": {
+                    "type": "array"
+                  },
+                  "value": [
+                    "A",
+                    "B",
+                    "C"
+                  ]
+                }
+              },
+              "schema": {
+                "type": "com.superconductive.rendered.string"
+              },
+              "template": "$column values must belong to this set: $v__0 $v__1 $v__2."
+            },
+            "value_type": "StringValueType"
+          }
+        ]
+      },
+      "meta": {},
+      "rendered_content": [
+        {
+          "name": "atomic.diagnostic.observed_value",
+          "value": {
+            "params": {},
+            "schema": {
+              "type": "com.superconductive.rendered.string"
+            },
+            "template": "\u224815.154% unexpected"
+          },
+          "value_type": "StringValueType"
+        }
+      ],
+      "result": {
+        "element_count": 1168,
+        "missing_count": 0,
+        "missing_percent": 0.0,
+        "partial_unexpected_counts": [
+          {
+            "count": 20,
+            "value": "Unknown"
+          }
+        ],
+        "partial_unexpected_index_list": [
+          5,
+          6,
+          29,
+          33,
+          42,
+          47,
+          48,
+          49,
+          50,
+          52,
+          69,
+          70,
+          74,
+          91,
+          95,
+          110,
+          115,
+          122,
+          126,
+          140
+        ],
+        "partial_unexpected_list": [
+          "Unknown",
+          "Unknown",
+          "Unknown",
+          "Unknown",
+          "Unknown",
+          "Unknown",
+          "Unknown",
+          "Unknown",
+          "Unknown",
+          "Unknown",
+          "Unknown",
+          "Unknown",
+          "Unknown",
+          "Unknown",
+          "Unknown",
+          "Unknown",
+          "Unknown",
+          "Unknown",
+          "Unknown",
+          "Unknown"
+        ],
+        "unexpected_count": 177,
+        "unexpected_percent": 15.154109589041095,
+        "unexpected_percent_nonmissing": 15.154109589041095,
+        "unexpected_percent_total": 15.154109589041095
+      },
+      "success": false
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "batch_id": "b83b0f509766f82637f3b626476181b0",
+          "column": "City_Category"
+        },
+        "meta": {},
+        "rendered_content": [
+          {
+            "name": "atomic.prescriptive.summary",
+            "value": {
+              "params": {
+                "column": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "value": "City_Category"
+                }
+              },
+              "schema": {
+                "type": "com.superconductive.rendered.string"
+              },
+              "template": "$column values must never be null."
+            },
+            "value_type": "StringValueType"
+          }
+        ]
+      },
+      "meta": {},
+      "rendered_content": [
+        {
+          "name": "atomic.diagnostic.observed_value",
+          "value": {
+            "params": {},
+            "schema": {
+              "type": "com.superconductive.rendered.string"
+            },
+            "template": "0% unexpected"
+          },
+          "value_type": "StringValueType"
+        }
+      ],
+      "result": {
+        "element_count": 1168,
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": [],
+        "partial_unexpected_list": [],
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_be_between",
+        "kwargs": {
+          "batch_id": "b83b0f509766f82637f3b626476181b0",
+          "column": "Product_Category_2",
+          "max_value": 18,
+          "min_value": 2
+        },
+        "meta": {},
+        "rendered_content": [
+          {
+            "name": "atomic.prescriptive.summary",
+            "value": {
+              "params": {
+                "column": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "value": "Product_Category_2"
+                },
+                "max_value": {
+                  "schema": {
+                    "type": "number"
+                  },
+                  "value": 18
+                },
+                "min_value": {
+                  "schema": {
+                    "type": "number"
+                  },
+                  "value": 2
+                }
+              },
+              "schema": {
+                "type": "com.superconductive.rendered.string"
+              },
+              "template": "$column values must be greater than or equal to $min_value and less than or equal to $max_value."
+            },
+            "value_type": "StringValueType"
+          }
+        ]
+      },
+      "meta": {},
+      "rendered_content": [
+        {
+          "name": "atomic.diagnostic.observed_value",
+          "value": {
+            "params": {},
+            "schema": {
+              "type": "com.superconductive.rendered.string"
+            },
+            "template": "0% unexpected"
+          },
+          "value_type": "StringValueType"
+        }
+      ],
+      "result": {
+        "element_count": 1168,
+        "missing_count": 340,
+        "missing_percent": 29.10958904109589,
+        "partial_unexpected_counts": [],
+        "partial_unexpected_index_list": [],
+        "partial_unexpected_list": [],
+        "unexpected_count": 0,
+        "unexpected_percent": 0.0,
+        "unexpected_percent_nonmissing": 0.0,
+        "unexpected_percent_total": 0.0
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "batch_id": "b83b0f509766f82637f3b626476181b0",
+          "column": "Product_Category_2"
+        },
+        "meta": {},
+        "rendered_content": [
+          {
+            "name": "atomic.prescriptive.summary",
+            "value": {
+              "params": {
+                "column": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "value": "Product_Category_2"
+                }
+              },
+              "schema": {
+                "type": "com.superconductive.rendered.string"
+              },
+              "template": "$column values must never be null."
+            },
+            "value_type": "StringValueType"
+          }
+        ]
+      },
+      "meta": {},
+      "rendered_content": [
+        {
+          "name": "atomic.diagnostic.observed_value",
+          "value": {
+            "params": {},
+            "schema": {
+              "type": "com.superconductive.rendered.string"
+            },
+            "template": "\u224829.11% unexpected"
+          },
+          "value_type": "StringValueType"
+        }
+      ],
+      "result": {
+        "element_count": 1168,
+        "partial_unexpected_counts": [
+          {
+            "count": 1,
+            "value": null
+          },
+          {
+            "count": 1,
+            "value": null
+          },
+          {
+            "count": 1,
+            "value": null
+          },
+          {
+            "count": 1,
+            "value": null
+          },
+          {
+            "count": 1,
+            "value": null
+          },
+          {
+            "count": 1,
+            "value": null
+          },
+          {
+            "count": 1,
+            "value": null
+          },
+          {
+            "count": 1,
+            "value": null
+          },
+          {
+            "count": 1,
+            "value": null
+          },
+          {
+            "count": 1,
+            "value": null
+          },
+          {
+            "count": 1,
+            "value": null
+          },
+          {
+            "count": 1,
+            "value": null
+          },
+          {
+            "count": 1,
+            "value": null
+          },
+          {
+            "count": 1,
+            "value": null
+          },
+          {
+            "count": 1,
+            "value": null
+          },
+          {
+            "count": 1,
+            "value": null
+          },
+          {
+            "count": 1,
+            "value": null
+          },
+          {
+            "count": 1,
+            "value": null
+          },
+          {
+            "count": 1,
+            "value": null
+          },
+          {
+            "count": 1,
+            "value": null
+          }
+        ],
+        "partial_unexpected_index_list": [
+          1,
+          5,
+          6,
+          11,
+          14,
+          23,
+          29,
+          35,
+          48,
+          59,
+          60,
+          65,
+          66,
+          68,
+          69,
+          70,
+          71,
+          75,
+          88,
+          91
+        ],
+        "partial_unexpected_list": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unexpected_count": 340,
+        "unexpected_percent": 29.10958904109589
+      },
+      "success": false
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_not_be_null",
+        "kwargs": {
+          "batch_id": "b83b0f509766f82637f3b626476181b0",
+          "column": "Product_Category_3"
+        },
+        "meta": {},
+        "rendered_content": [
+          {
+            "name": "atomic.prescriptive.summary",
+            "value": {
+              "params": {
+                "column": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "value": "Product_Category_3"
+                }
+              },
+              "schema": {
+                "type": "com.superconductive.rendered.string"
+              },
+              "template": "$column values must never be null."
+            },
+            "value_type": "StringValueType"
+          }
+        ]
+      },
+      "meta": {},
+      "rendered_content": [
+        {
+          "name": "atomic.diagnostic.observed_value",
+          "value": {
+            "params": {},
+            "schema": {
+              "type": "com.superconductive.rendered.string"
+            },
+            "template": "\u224865.325% unexpected"
+          },
+          "value_type": "StringValueType"
+        }
+      ],
+      "result": {
+        "element_count": 1168,
+        "partial_unexpected_counts": [
+          {
+            "count": 1,
+            "value": null
+          },
+          {
+            "count": 1,
+            "value": null
+          },
+          {
+            "count": 1,
+            "value": null
+          },
+          {
+            "count": 1,
+            "value": null
+          },
+          {
+            "count": 1,
+            "value": null
+          },
+          {
+            "count": 1,
+            "value": null
+          },
+          {
+            "count": 1,
+            "value": null
+          },
+          {
+            "count": 1,
+            "value": null
+          },
+          {
+            "count": 1,
+            "value": null
+          },
+          {
+            "count": 1,
+            "value": null
+          },
+          {
+            "count": 1,
+            "value": null
+          },
+          {
+            "count": 1,
+            "value": null
+          },
+          {
+            "count": 1,
+            "value": null
+          },
+          {
+            "count": 1,
+            "value": null
+          },
+          {
+            "count": 1,
+            "value": null
+          },
+          {
+            "count": 1,
+            "value": null
+          },
+          {
+            "count": 1,
+            "value": null
+          },
+          {
+            "count": 1,
+            "value": null
+          },
+          {
+            "count": 1,
+            "value": null
+          },
+          {
+            "count": 1,
+            "value": null
+          }
+        ],
+        "partial_unexpected_index_list": [
+          1,
+          2,
+          3,
+          5,
+          6,
+          7,
+          8,
+          11,
+          14,
+          16,
+          19,
+          20,
+          21,
+          23,
+          24,
+          26,
+          27,
+          28,
+          29,
+          31
+        ],
+        "partial_unexpected_list": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "unexpected_count": 763,
+        "unexpected_percent": 65.32534246575342
+      },
+      "success": false
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_match_regex",
+        "kwargs": {
+          "batch_id": "b83b0f509766f82637f3b626476181b0",
+          "column": "Product_Category_3",
+          "mostly": 1.0,
+          "regex": "^\\d+(\\.\\d+)?$"
+        },
+        "meta": {},
+        "rendered_content": [
+          {
+            "name": "atomic.prescriptive.summary",
+            "value": {
+              "params": {
+                "column": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "value": "Product_Category_3"
+                },
+                "mostly": {
+                  "schema": {
+                    "type": "number"
+                  },
+                  "value": 1.0
+                },
+                "regex": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "value": "^\\d+(\\.\\d+)?$"
+                }
+              },
+              "schema": {
+                "type": "com.superconductive.rendered.string"
+              },
+              "template": "$column values must match this regular expression: $regex."
+            },
+            "value_type": "StringValueType"
+          }
+        ]
+      },
+      "meta": {},
+      "rendered_content": [
+        {
+          "name": "atomic.diagnostic.observed_value",
+          "value": {
+            "params": {},
+            "schema": {
+              "type": "com.superconductive.rendered.string"
+            },
+            "template": "\u224813.58% unexpected"
+          },
+          "value_type": "StringValueType"
+        }
+      ],
+      "result": {
+        "element_count": 1168,
+        "missing_count": 763,
+        "missing_percent": 65.32534246575342,
+        "partial_unexpected_counts": [
+          {
+            "count": 20,
+            "value": "abc"
+          }
+        ],
+        "partial_unexpected_index_list": [
+          13,
+          50,
+          81,
+          126,
+          137,
+          170,
+          200,
+          212,
+          219,
+          226,
+          230,
+          265,
+          278,
+          294,
+          304,
+          356,
+          362,
+          446,
+          450,
+          476
+        ],
+        "partial_unexpected_list": [
+          "abc",
+          "abc",
+          "abc",
+          "abc",
+          "abc",
+          "abc",
+          "abc",
+          "abc",
+          "abc",
+          "abc",
+          "abc",
+          "abc",
+          "abc",
+          "abc",
+          "abc",
+          "abc",
+          "abc",
+          "abc",
+          "abc",
+          "abc"
+        ],
+        "unexpected_count": 55,
+        "unexpected_percent": 13.580246913580247,
+        "unexpected_percent_nonmissing": 13.580246913580247,
+        "unexpected_percent_total": 4.708904109589041
+      },
+      "success": false
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_be_in_set",
+        "kwargs": {
+          "batch_id": "b83b0f509766f82637f3b626476181b0",
+          "column": "Gender",
+          "value_set": [
+            "M",
+            "F"
+          ]
+        },
+        "meta": {},
+        "rendered_content": [
+          {
+            "name": "atomic.prescriptive.summary",
+            "value": {
+              "params": {
+                "column": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "value": "Gender"
+                },
+                "v__0": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "value": "M"
+                },
+                "v__1": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "value": "F"
+                },
+                "value_set": {
+                  "schema": {
+                    "type": "array"
+                  },
+                  "value": [
+                    "M",
+                    "F"
+                  ]
+                }
+              },
+              "schema": {
+                "type": "com.superconductive.rendered.string"
+              },
+              "template": "$column values must belong to this set: $v__0 $v__1."
+            },
+            "value_type": "StringValueType"
+          }
+        ]
+      },
+      "meta": {},
+      "rendered_content": [
+        {
+          "name": "atomic.diagnostic.observed_value",
+          "value": {
+            "params": {},
+            "schema": {
+              "type": "com.superconductive.rendered.string"
+            },
+            "template": "\u224844.484% unexpected"
+          },
+          "value_type": "StringValueType"
+        }
+      ],
+      "result": {
+        "element_count": 1168,
+        "missing_count": 44,
+        "missing_percent": 3.767123287671233,
+        "partial_unexpected_counts": [
+          {
+            "count": 10,
+            "value": "Q"
+          },
+          {
+            "count": 6,
+            "value": "L"
+          },
+          {
+            "count": 4,
+            "value": "T"
+          }
+        ],
+        "partial_unexpected_index_list": [
+          4,
+          9,
+          10,
+          12,
+          13,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          22,
+          25,
+          27,
+          35,
+          36,
+          37,
+          38,
+          44,
+          47
+        ],
+        "partial_unexpected_list": [
+          "L",
+          "Q",
+          "T",
+          "T",
+          "Q",
+          "Q",
+          "Q",
+          "Q",
+          "L",
+          "Q",
+          "L",
+          "L",
+          "T",
+          "Q",
+          "T",
+          "L",
+          "L",
+          "Q",
+          "Q",
+          "Q"
+        ],
+        "unexpected_count": 500,
+        "unexpected_percent": 44.48398576512456,
+        "unexpected_percent_nonmissing": 44.48398576512456,
+        "unexpected_percent_total": 42.80821917808219
+      },
+      "success": false
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_be_of_type",
+        "kwargs": {
+          "batch_id": "b83b0f509766f82637f3b626476181b0",
+          "column": "Occupation",
+          "type_": "int"
+        },
+        "meta": {},
+        "rendered_content": [
+          {
+            "name": "atomic.prescriptive.summary",
+            "value": {
+              "params": {
+                "column": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "value": "Occupation"
+                },
+                "type_": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "value": "int"
+                }
+              },
+              "schema": {
+                "type": "com.superconductive.rendered.string"
+              },
+              "template": "$column values must be of type $type_."
+            },
+            "value_type": "StringValueType"
+          }
+        ]
+      },
+      "meta": {},
+      "rendered_content": [
+        {
+          "name": "atomic.diagnostic.observed_value",
+          "value": {
+            "params": {},
+            "schema": {
+              "type": "com.superconductive.rendered.string"
+            },
+            "template": "int64"
+          },
+          "value_type": "StringValueType"
+        }
+      ],
+      "result": {
+        "observed_value": "int64"
+      },
+      "success": true
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_be_between",
+        "kwargs": {
+          "batch_id": "b83b0f509766f82637f3b626476181b0",
+          "column": "Product_Category_1",
+          "max_value": 20,
+          "min_value": 1
+        },
+        "meta": {},
+        "rendered_content": [
+          {
+            "name": "atomic.prescriptive.summary",
+            "value": {
+              "params": {
+                "column": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "value": "Product_Category_1"
+                },
+                "max_value": {
+                  "schema": {
+                    "type": "number"
+                  },
+                  "value": 20
+                },
+                "min_value": {
+                  "schema": {
+                    "type": "number"
+                  },
+                  "value": 1
+                }
+              },
+              "schema": {
+                "type": "com.superconductive.rendered.string"
+              },
+              "template": "$column values must be greater than or equal to $min_value and less than or equal to $max_value."
+            },
+            "value_type": "StringValueType"
+          }
+        ]
+      },
+      "meta": {},
+      "rendered_content": [
+        {
+          "name": "atomic.diagnostic.observed_value",
+          "value": {
+            "params": {},
+            "schema": {
+              "type": "com.superconductive.rendered.string"
+            },
+            "template": "\u224815.903% unexpected"
+          },
+          "value_type": "StringValueType"
+        }
+      ],
+      "result": {
+        "element_count": 1168,
+        "missing_count": 470,
+        "missing_percent": 40.23972602739726,
+        "partial_unexpected_counts": [
+          {
+            "count": 20,
+            "value": 99999.0
+          }
+        ],
+        "partial_unexpected_index_list": [
+          6,
+          13,
+          34,
+          46,
+          48,
+          50,
+          54,
+          78,
+          81,
+          110,
+          126,
+          137,
+          170,
+          198,
+          200,
+          206,
+          212,
+          219,
+          226,
+          230
+        ],
+        "partial_unexpected_list": [
+          99999.0,
+          99999.0,
+          99999.0,
+          99999.0,
+          99999.0,
+          99999.0,
+          99999.0,
+          99999.0,
+          99999.0,
+          99999.0,
+          99999.0,
+          99999.0,
+          99999.0,
+          99999.0,
+          99999.0,
+          99999.0,
+          99999.0,
+          99999.0,
+          99999.0,
+          99999.0
+        ],
+        "unexpected_count": 111,
+        "unexpected_percent": 15.902578796561603,
+        "unexpected_percent_nonmissing": 15.902578796561603,
+        "unexpected_percent_total": 9.503424657534246
+      },
+      "success": false
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_column_values_to_match_regex",
+        "kwargs": {
+          "batch_id": "b83b0f509766f82637f3b626476181b0",
+          "column": "Age",
+          "mostly": 1.0,
+          "regex": "^\\d{2}-\\d{2}$|^\\d{2}\\+$"
+        },
+        "meta": {},
+        "rendered_content": [
+          {
+            "name": "atomic.prescriptive.summary",
+            "value": {
+              "params": {
+                "column": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "value": "Age"
+                },
+                "mostly": {
+                  "schema": {
+                    "type": "number"
+                  },
+                  "value": 1.0
+                },
+                "regex": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "value": "^\\d{2}-\\d{2}$|^\\d{2}\\+$"
+                }
+              },
+              "schema": {
+                "type": "com.superconductive.rendered.string"
+              },
+              "template": "$column values must match this regular expression: $regex."
+            },
+            "value_type": "StringValueType"
+          }
+        ]
+      },
+      "meta": {},
+      "rendered_content": [
+        {
+          "name": "atomic.diagnostic.observed_value",
+          "value": {
+            "params": {},
+            "schema": {
+              "type": "com.superconductive.rendered.string"
+            },
+            "template": "\u224815.411% unexpected"
+          },
+          "value_type": "StringValueType"
+        }
+      ],
+      "result": {
+        "element_count": 1168,
+        "missing_count": 0,
+        "missing_percent": 0.0,
+        "partial_unexpected_counts": [
+          {
+            "count": 19,
+            "value": "999"
+          },
+          {
+            "count": 1,
+            "value": "0-17"
+          }
+        ],
+        "partial_unexpected_index_list": [
+          9,
+          10,
+          15,
+          16,
+          17,
+          27,
+          32,
+          38,
+          44,
+          47,
+          51,
+          52,
+          65,
+          70,
+          74,
+          81,
+          89,
+          90,
+          91,
+          95
+        ],
+        "partial_unexpected_list": [
+          "999",
+          "999",
+          "999",
+          "999",
+          "999",
+          "999",
+          "0-17",
+          "999",
+          "999",
+          "999",
+          "999",
+          "999",
+          "999",
+          "999",
+          "999",
+          "999",
+          "999",
+          "999",
+          "999",
+          "999"
+        ],
+        "unexpected_count": 180,
+        "unexpected_percent": 15.41095890410959,
+        "unexpected_percent_nonmissing": 15.41095890410959,
+        "unexpected_percent_total": 15.41095890410959
+      },
+      "success": false
+    },
+    {
+      "exception_info": {
+        "exception_message": null,
+        "exception_traceback": null,
+        "raised_exception": false
+      },
+      "expectation_config": {
+        "expectation_type": "expect_table_columns_to_match_set",
+        "kwargs": {
+          "batch_id": "b83b0f509766f82637f3b626476181b0",
+          "column_set": [
+            "User_ID",
+            "City_Category",
+            "Occupation",
+            "Product_Category_3",
+            "Stay_In_Current_City_Years",
+            "Product_Category_2",
+            "Age",
+            "Product_Category_1",
+            "Gender",
+            "Marital_Status",
+            "Product_ID"
+          ]
+        },
+        "meta": {},
+        "rendered_content": [
+          {
+            "name": "atomic.prescriptive.summary",
+            "value": {
+              "params": {
+                "column_set": {
+                  "schema": {
+                    "type": "array"
+                  },
+                  "value": [
+                    "User_ID",
+                    "City_Category",
+                    "Occupation",
+                    "Product_Category_3",
+                    "Stay_In_Current_City_Years",
+                    "Product_Category_2",
+                    "Age",
+                    "Product_Category_1",
+                    "Gender",
+                    "Marital_Status",
+                    "Product_ID"
+                  ]
+                },
+                "column_set_0": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "value": "User_ID"
+                },
+                "column_set_1": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "value": "City_Category"
+                },
+                "column_set_10": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "value": "Product_ID"
+                },
+                "column_set_2": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "value": "Occupation"
+                },
+                "column_set_3": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "value": "Product_Category_3"
+                },
+                "column_set_4": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "value": "Stay_In_Current_City_Years"
+                },
+                "column_set_5": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "value": "Product_Category_2"
+                },
+                "column_set_6": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "value": "Age"
+                },
+                "column_set_7": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "value": "Product_Category_1"
+                },
+                "column_set_8": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "value": "Gender"
+                },
+                "column_set_9": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "value": "Marital_Status"
+                }
+              },
+              "schema": {
+                "type": "com.superconductive.rendered.string"
+              },
+              "template": "Must have at least these columns (in any order): $column_set_0 $column_set_1 $column_set_2 $column_set_3 $column_set_4 $column_set_5 $column_set_6 $column_set_7 $column_set_8 $column_set_9 $column_set_10"
+            },
+            "value_type": "StringValueType"
+          }
+        ]
+      },
+      "meta": {},
+      "rendered_content": [
+        {
+          "name": "atomic.diagnostic.observed_value",
+          "value": {
+            "params": {},
+            "schema": {
+              "type": "com.superconductive.rendered.string"
+            },
+            "template": "['User_ID', 'Product_ID', 'Gender', 'Age', 'Occupation', 'City_Category', 'Stay_In_Current_City_Years', 'Marital_Status', 'Product_Category_1', 'Product_Category_2', 'Product_Category_3']"
+          },
+          "value_type": "StringValueType"
+        }
+      ],
+      "result": {
+        "observed_value": [
+          "User_ID",
+          "Product_ID",
+          "Gender",
+          "Age",
+          "Occupation",
+          "City_Category",
+          "Stay_In_Current_City_Years",
+          "Marital_Status",
+          "Product_Category_1",
+          "Product_Category_2",
+          "Product_Category_3"
+        ]
+      },
+      "success": true
+    }
+  ],
+  "statistics": {
+    "evaluated_expectations": 11,
+    "success_percent": 36.36363636363637,
+    "successful_expectations": 4,
+    "unsuccessful_expectations": 7
+  },
+  "success": false
+}
